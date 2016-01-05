@@ -1,0 +1,17 @@
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\DataCleaningSite.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\DataCleaningSite.pdb
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\obj\Debug\DataCleaningSite.csprojResolveAssemblyReference.cache
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\obj\Debug\DataCleaningSite.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\obj\Debug\DataCleaningSite.pdb
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\DBHelper.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\Npgsql.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\Mono.Security.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\DBHelper.pdb
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\Npgsql.pdb
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\Npgsql.xml
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\de\Npgsql.resources.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\es\Npgsql.resources.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\fi\Npgsql.resources.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\fr\Npgsql.resources.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\ja\Npgsql.resources.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\zh-CN\Npgsql.resources.dll

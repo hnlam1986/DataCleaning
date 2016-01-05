@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LastUsedBuildConfiguration>Release</LastUsedBuildConfiguration>
+    <LastUsedPlatform>Any CPU</LastUsedPlatform>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="ajax.aspx">
+      <publishTime>12/28/2015 14:02:37</publishTime>
+    </File>
+    <File Include="Approve.aspx">
+      <publishTime>01/04/2016 10:10:15</publishTime>
+    </File>
+    <File Include="bin/DataCleaningSite.dll">
+      <publishTime>01/04/2016 09:59:18</publishTime>
+    </File>
+    <File Include="bin/DBHelper.dll">
+      <publishTime>01/04/2016 09:59:17</publishTime>
+    </File>
+    <File Include="bin/de/Npgsql.resources.dll">
+      <publishTime>11/21/2014 06:43:34</publishTime>
+    </File>
+    <File Include="bin/es/Npgsql.resources.dll">
+      <publishTime>11/21/2014 06:43:34</publishTime>
+    </File>
+    <File Include="bin/fi/Npgsql.resources.dll">
+      <publishTime>11/21/2014 06:43:34</publishTime>
+    </File>
+    <File Include="bin/fr/Npgsql.resources.dll">
+      <publishTime>11/21/2014 06:43:34</publishTime>
+    </File>
+    <File Include="bin/ja/Npgsql.resources.dll">
+      <publishTime>11/21/2014 06:43:34</publishTime>
+    </File>
+    <File Include="bin/Mono.Security.dll">
+      <publishTime>11/21/2014 06:43:34</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>03/28/2015 00:50:25</publishTime>
+    </File>
+    <File Include="bin/Npgsql.dll">
+      <publishTime>11/21/2014 06:43:34</publishTime>
+    </File>
+    <File Include="bin/zh-CN/Npgsql.resources.dll">
+      <publishTime>11/21/2014 06:43:34</publishTime>
+    </File>
+    <File Include="Configuration.aspx">
+      <publishTime>12/31/2015 23:23:51</publishTime>
+    </File>
+    <File Include="Control/SubMenu.ascx">
+      <publishTime>12/31/2015 23:53:10</publishTime>
+    </File>
+    <File Include="CSS/easyui.css">
+      <publishTime>12/29/2015 16:58:24</publishTime>
+    </File>
+    <File Include="CSS/images/accordion_arrows.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/blank.gif">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/calendar_arrows.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/combo_arrow.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/datagrid_icons.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/datebox_arrow.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/layout_arrows.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/linkbutton_bg.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/loading.gif">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/menu_arrows.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/messager_icons.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/pagination_icons.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/panel_tools.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/searchbox_button.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/slider_handle.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/spinner_arrows.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/tabs_icons.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/tree_icons.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/images/validatebox_warning.png">
+      <publishTime>12/29/2015 17:00:37</publishTime>
+    </File>
+    <File Include="CSS/MainCSS.css">
+      <publishTime>01/03/2016 10:37:07</publishTime>
+    </File>
+    <File Include="DataCleaning.Master">
+      <publishTime>01/04/2016 10:09:45</publishTime>
+    </File>
+    <File Include="Default.aspx">
+      <publishTime>01/04/2016 10:17:46</publishTime>
+    </File>
+    <File Include="Error.aspx">
+      <publishTime>12/31/2015 09:57:09</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>12/31/2015 09:16:15</publishTime>
+    </File>
+    <File Include="GoogleSuggestAddress.aspx">
+      <publishTime>01/04/2016 10:10:56</publishTime>
+    </File>
+    <File Include="Home.aspx">
+      <publishTime>12/29/2015 15:10:55</publishTime>
+    </File>
+    <File Include="Images/black_button.png">
+      <publishTime>12/29/2015 14:54:27</publishTime>
+    </File>
+    <File Include="Images/delete.png">
+      <publishTime>01/03/2016 09:22:57</publishTime>
+    </File>
+    <File Include="Images/edit.png">
+      <publishTime>01/03/2016 09:22:42</publishTime>
+    </File>
+    <File Include="Images/header_blue_bg.png">
+      <publishTime>12/29/2015 12:45:13</publishTime>
+    </File>
+    <File Include="Images/left_button.png">
+      <publishTime>12/29/2015 10:44:57</publishTime>
+    </File>
+    <File Include="Images/left_button_hover.png">
+      <publishTime>12/29/2015 11:12:53</publishTime>
+    </File>
+    <File Include="Images/loading.gif">
+      <publishTime>12/29/2015 17:35:17</publishTime>
+    </File>
+    <File Include="Images/middle_button.png">
+      <publishTime>12/29/2015 10:44:57</publishTime>
+    </File>
+    <File Include="Images/middle_button_hover.png">
+      <publishTime>12/29/2015 11:12:53</publishTime>
+    </File>
+    <File Include="Images/navi_bg.png">
+      <publishTime>12/29/2015 12:44:32</publishTime>
+    </File>
+    <File Include="Images/popup.png">
+      <publishTime>12/30/2015 11:44:37</publishTime>
+    </File>
+    <File Include="Images/right_button.png">
+      <publishTime>12/29/2015 10:44:57</publishTime>
+    </File>
+    <File Include="Images/right_button_hover.png">
+      <publishTime>12/29/2015 11:12:48</publishTime>
+    </File>
+    <File Include="QC.aspx">
+      <publishTime>01/04/2016 10:12:15</publishTime>
+    </File>
+    <File Include="Script/datagrid-filter.js">
+      <publishTime>01/02/2016 22:57:33</publishTime>
+    </File>
+    <File Include="Script/GoogleAPI.js">
+      <publishTime>12/30/2015 10:25:13</publishTime>
+    </File>
+    <File Include="Script/jquery-1.11.3.min.js">
+      <publishTime>12/29/2015 22:37:01</publishTime>
+    </File>
+    <File Include="Script/jquery.blockUI.js">
+      <publishTime>12/29/2015 17:49:19</publishTime>
+    </File>
+    <File Include="Script/jquery.caret.1.02.min.js">
+      <publishTime>12/30/2015 13:34:58</publishTime>
+    </File>
+    <File Include="Script/jquery.easyui.min.js">
+      <publishTime>12/29/2015 16:54:17</publishTime>
+    </File>
+    <File Include="Script/jquery.formvalidate.js">
+      <publishTime>01/02/2016 17:15:59</publishTime>
+    </File>
+    <File Include="Script/jquery.highlight-5.js">
+      <publishTime>12/30/2015 12:34:36</publishTime>
+    </File>
+    <File Include="Script/jquery.highlight.js">
+      <publishTime>12/30/2015 12:50:00</publishTime>
+    </File>
+    <File Include="Script/jquery.layout-latest.js">
+      <publishTime>12/29/2015 16:31:25</publishTime>
+    </File>
+    <File Include="Script/jquery.validate.min.js">
+      <publishTime>01/02/2016 16:58:44</publishTime>
+    </File>
+    <File Include="Script/ProcessForm.js">
+      <publishTime>12/31/2015 18:02:23</publishTime>
+    </File>
+    <File Include="Script/shortcut.js">
+      <publishTime>12/31/2015 15:44:19</publishTime>
+    </File>
+    <File Include="Script/UserManagement.js">
+      <publishTime>01/03/2016 14:13:23</publishTime>
+    </File>
+    <File Include="Script/utilities.js">
+      <publishTime>12/31/2015 17:52:11</publishTime>
+    </File>
+    <File Include="Setting.aspx">
+      <publishTime>01/02/2016 15:04:47</publishTime>
+    </File>
+    <File Include="UserManagement.aspx">
+      <publishTime>01/04/2016 10:20:08</publishTime>
+    </File>
+    <File Include="Verify.aspx">
+      <publishTime>01/04/2016 10:12:15</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>01/04/2016 10:22:03</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

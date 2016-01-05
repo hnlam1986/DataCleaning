@@ -1,0 +1,15 @@
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\DBHelper.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\DBHelper.pdb
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\obj\Debug\DBHelper.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\obj\Debug\DBHelper.pdb
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\Npgsql.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\Mono.Security.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\Npgsql.pdb
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\Npgsql.xml
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\de\Npgsql.resources.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\es\Npgsql.resources.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\fi\Npgsql.resources.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\fr\Npgsql.resources.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\ja\Npgsql.resources.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\zh-CN\Npgsql.resources.dll
+D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\obj\Debug\DBHelper.csprojResolveAssemblyReference.cache

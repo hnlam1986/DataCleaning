@@ -1,0 +1,360 @@
+﻿body
+{
+    font-family: Tahoma;
+    font-size: 12px;
+    margin: 0;
+}
+/*------------------------------------------------*/
+.outer
+{
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    min-width: 500px;
+    min-height: 400px;
+}
+
+.ie7 .outer
+{
+    display: inline;
+    top: 0;
+}
+
+.middle
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.ie7 .middle
+{
+    display: inline;
+    top: 50%;
+    position: relative;
+}
+
+.inner
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 221px;
+    height: 158px;
+}
+
+.ie7 .inner
+{
+    display: inline;
+    left: 50%;
+    position: relative;
+    margin-top: -50px;
+    margin-left: -111px;
+}
+/*------------------------------------------------*/
+#divLogin
+{
+    border: solid 1px #005fca;
+}
+
+#divLoginHeader
+{
+    width: 100%;
+    height: 30px;
+    background-image: url('/Images/header_blue_bg.png');
+    background-repeat: repeat-x;
+}
+
+#divLoginHeaderText
+{
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    padding-top: 6px;
+    padding-left: 8px;
+}
+
+.padding-top-5px
+{
+    padding-top: 5px;
+}
+
+#divLoginBody
+{
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+.login-textbox
+{
+    width: 193px;
+}
+
+#divLoginSubmit
+{
+    text-align: center;
+}
+
+#valUserName, #valPassword, .errorMessage
+{
+    color: red;
+}
+
+.login-submit-button
+{
+    width: 100px;
+}
+
+/*-----------------------------------------------------------*/
+#mainNavigator
+{
+    background-image: url('/Images/navi_bg.png');
+    background-repeat: repeat-x;
+    width: 100%;
+    height: 50px;
+}
+
+.navi-button
+{
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    padding-top: 6px;
+    text-align: center;
+    display: inline-block;
+}
+
+.left-button
+{
+    width: 102px;
+    height: 28px;
+    background-image: url('/Images/left_button.png');
+    background-repeat: no-repeat;
+}
+
+.middle-button
+{
+    width: 102px;
+    height: 28px;
+    background-image: url('/Images/middle_button.png');
+    background-repeat: no-repeat;
+    margin-left: -5px;
+}
+
+.right-button
+{
+    width: 102px;
+    height: 28px;
+    background-image: url('/Images/right_button.png');
+    background-repeat: no-repeat;
+    margin-left: -5px;
+}
+
+.left-button:hover, .left-button.hover
+{
+    width: 102px;
+    height: 28px;
+    background-image: url('/Images/left_button_hover.png');
+    background-repeat: no-repeat;
+}
+
+.middle-button:hover, .middle-button.hover
+{
+    width: 102px;
+    height: 28px;
+    background-image: url('/Images/middle_button_hover.png');
+    background-repeat: no-repeat;
+    margin-left: -5px;
+}
+
+.right-button:hover, .right-button.hover
+{
+    width: 102px;
+    height: 28px;
+    background-image: url('/Images/right_button_hover.png');
+    background-repeat: no-repeat;
+    margin-left: -5px;
+}
+
+#btnLogout
+{
+    float: right;
+    width: 102px;
+    height: 28px;
+    background-image: url('/Images/black_button.png');
+    background-repeat: no-repeat;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+#innerNavi
+{
+    float: left;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+/*-----------------------------------------------------*/
+.blockElement.blockMsg
+{
+    border: 2px solid #95b8e7!important;
+}
+
+.card-item
+{
+    border-bottom: 1px solid #95b8e7;
+    padding: 10px;
+}
+
+.odd-item-card
+{
+    background-color: #c1d1e2;
+}
+
+.card-item:hover, .card-item.select-card
+{
+    background-color: #3185e3;
+    cursor: pointer;
+}
+
+.panel-contain
+{
+    border-bottom: 1px solid #95b8e7;
+    padding: 10px;
+}
+
+#divCleaningData
+{
+    /*height: 103px;*/
+}
+
+#fullAddressContain
+{
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.margin-top-10px
+{
+    margin-top: 10px;
+}
+#googleSuggestResult
+{
+    padding-top: 10px;
+    padding-left:20px;
+    line-height:20px;
+}
+#googleSuggest
+{
+    height: 100px;
+}
+.btnGooglePopup
+{
+    background-image: url('/Images/popup.png');
+    height:20px;
+    width:20px;
+    float:right;
+    margin-right:10px;
+    cursor:pointer;
+    margin-top:-2px;
+}
+#pnlGoogleSuggest .panel-title
+{
+    width:300px;
+    display:inline-block;
+}
+.highlight { background-color: yellow }
+
+.process-form-error-message
+{
+    color: red;
+    margin-left:10px;
+}
+#divGoogle
+{
+    overflow:hidden;
+}
+.highlight-background
+{
+    background-color: #ffcccc;
+    border: 1px solid #d9d9d9;
+    width:195px;
+}
+#subMenu
+{
+    height:30px;
+    width: 100%;
+    background-color:#e6e6e6;
+}
+#innerSubMenu
+{
+    float: left;
+    margin-top:5px;
+    margin-left:10px;
+}
+.sub-menu
+{
+    text-decoration: none;
+    font-weight:bold;
+    color: black;
+}
+.sub-menu-inactive
+{
+    text-decoration: none;
+    font-weight:bold;
+    color: #b3b3b3;
+}
+#divSettingContent
+{
+    padding:10px;
+}
+.qc-percent-text-box
+{
+    width: 198px;
+}
+.text-box
+{
+    width: 190px;
+}
+.user_table
+{
+    width:100%;
+    padding-right:10px;
+}
+/*---------------------------------------------------------*/
+.edit-function-column
+{
+    background-image:url('/Images/Edit.png');
+    float: left;
+    height: 15px;
+    width: 15px;
+    cursor:pointer;
+    margin-left:5px;
+}
+.delete-function-column
+{
+    background-image:url('/Images/delete.png');
+    float: left;
+    height: 15px;
+    width: 15px;
+    cursor:pointer;
+    margin-left:5px;
+}
+.datagrid-header-row td[field=function] input.datagrid-filter
+{
+    display:none;
+}
+.non-display
+{
+    display:none;
+}
+.error-message
+{
+    color:red;
+}
+#divReturnCard, #divResetAllData, #divExportData
+{
+    margin-top:10px;
+}
+#divReturnCard, #divResetAllData, #divQCSetting, #divExportData
+{
+    border: 1px solid #95b8e7;
+    padding:10px;
+}

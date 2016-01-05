@@ -1,0 +1,48 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="DataCleaning.master.cs" Inherits="DataCleaningSite.DataCleaning" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Data Cleaning</title>
+    <link rel="stylesheet" type="text/css" href="/CSS/MainCSS.css" />
+    <script type="text/javascript" src="/Script/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/Script/utilities.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <div id="mainNavigator">
+                <div id="innerNavi" runat="server">
+                </div>
+                <a href="/default.aspx?logout=true">
+                    <div id="btnLogout" class="navi-button">Log Out</div>
+                </a>
+            </div>
+            <div id="mainBody">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            </div>
+        </div>
+    </form>
+    <script>
+        $(document).ready(function () {
+            $("#btnVerify").removeClass("hover");
+            $("#btnQc").removeClass("hover");
+            $("#btnApprove").removeClass("hover");
+            $("#btnSetting").removeClass("hover");
+            if (window.location.href.toLowerCase().indexOf("verify.aspx")>0) {
+                $("#btnVerify").addClass("hover");
+            } else if (window.location.href.toLowerCase().indexOf("qc.aspx")>0) {
+                $("#btnQc").addClass("hover");
+            } else if (window.location.href.toLowerCase().indexOf("approve.aspx")>0) {
+                $("#btnApprove").addClass("hover");
+            } else if (window.location.href.toLowerCase().indexOf("setting.aspx")>0) {
+                $("#btnSetting").addClass("hover");
+            }
+        });
+    </script>
+</body>
+</html>
