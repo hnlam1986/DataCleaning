@@ -1,0 +1,1752 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.4.5
+-- Dumped by pg_dump version 9.4.0
+-- Started on 2016-01-05 10:59:05
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 7 (class 2615 OID 25134)
+-- Name: data_cleaning; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA data_cleaning;
+
+
+ALTER SCHEMA data_cleaning OWNER TO postgres;
+
+SET search_path = data_cleaning, pg_catalog;
+
+--
+-- TOC entry 188 (class 1255 OID 25135)
+-- Name: get_all_config(); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION get_all_config() RETURNS refcursor
+    LANGUAGE plpgsql
+    AS $$
+    DECLARE
+      ref refcursor;
+    BEGIN
+      OPEN ref FOR SELECT * FROM data_cleaning.configuration ;
+      RETURN ref;
+    END;
+    $$;
+
+
+ALTER FUNCTION data_cleaning.get_all_config() OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1255 OID 25136)
+-- Name: get_all_data(); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION get_all_data() RETURNS refcursor
+    LANGUAGE plpgsql
+    AS $$
+    DECLARE
+      ref refcursor;
+    BEGIN
+      OPEN ref FOR SELECT 
+      data.data_id, 
+  data.management_id, 
+  data.appl_id, 
+  data.address_id, 
+  data.cust_id, 
+  data.cust_type, 
+  data.address_type, 
+  data.state_desc, 
+  data.country_lms, 
+  data.city_lms, 
+  data.flag, 
+  data.address, 
+  data.address1, 
+  data.address2, 
+  data.address3, 
+  data.address4, 
+  data.processed_dttm, 
+  management.step, 
+  management.assignment, 
+  management.status,
+      data_cleaning.sp_process_address1(address1) as adrress_correct1 ,
+data_cleaning.sp_process_address2(address2) as adrress_correct2, 
+data_cleaning.sp_process_address3(address3) as adrress_correct3,
+data_cleaning.sp_process_address4(address4) as adrress_correct4
+ FROM 
+  data_cleaning.data, 
+  data_cleaning.management
+WHERE 
+  data.management_id = management.management_id and management.step is null
+order by data.data_id limit 10;	
+      RETURN ref;
+    END;
+    $$;
+
+
+ALTER FUNCTION data_cleaning.get_all_data() OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1255 OID 25137)
+-- Name: get_all_user_info(); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION get_all_user_info() RETURNS refcursor
+    LANGUAGE plpgsql
+    AS $$
+    DECLARE
+      ref refcursor;
+    BEGIN
+      OPEN ref FOR SELECT * FROM data_cleaning.users u
+      WHERE u.status = true
+	order by user_id desc;	
+      RETURN ref;
+    END;
+    $$;
+
+
+ALTER FUNCTION data_cleaning.get_all_user_info() OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1255 OID 25138)
+-- Name: get_data_step(character varying, character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION get_data_step(user_name character varying, step character varying) RETURNS refcursor
+    LANGUAGE plpgsql
+    AS $_$
+    DECLARE
+	ref refcursor;
+	pre_step character varying;
+	pre_status boolean;
+    BEGIN
+--assign card
+	update data_cleaning.management m
+	set assignment = $1 , status=1 --, step=$2	
+	WHERE m.management_id in
+	(
+		SELECT 
+		  management.management_id
+		FROM 
+		  data_cleaning.management, 
+		  data_cleaning.data, 
+		  data_cleaning.data_process
+		WHERE 
+			management.step = $2 AND management.status = 1 AND
+		  management.management_id = data.management_id AND
+		  data.data_id = data_process.data_id AND
+		  (management.assignment = $1 OR management.assignment IS NULL)		
+		ORDER BY management.assignment, management.management_id
+		LIMIT 10
+	);
+
+--get card
+      OPEN ref FOR 
+	SELECT 
+	  management.management_id, 
+	  management.step, 
+	  management.assignment, 
+	  management.status,
+	  data.data_id, 
+	  data.address, 
+	data.adrress_correct, 
+	data.adrress_correct1, 
+	data.adrress_correct2, 
+	data.adrress_correct3, 
+	data.adrress_correct4, 
+	  data_process.data_process_id, 
+	  data_process.verify_address1, 
+	  data_process.verify_address2, 
+	  data_process.verify_address3, 
+	  data_process.verify_address4, 
+	  data_process.qc_address1, 
+	  data_process.qc_address2, 
+	  data_process.qc_address3, 
+	  data_process.qc_address4, 
+	  data_process.approve_address1, 
+	  data_process.approve_address2, 
+	  data_process.approve_address3, 
+	  data_process.approve_address4, 
+	  data_process.cleaning_address1, 
+	  data_process.cleaning_address2, 
+	  data_process.cleaning_address3, 
+	  data_process.cleaning_address4, 
+	  data_process.full_cleaning_address, 
+	  data_process.google_suggest 
+	FROM 
+	  data_cleaning.management, 
+	  data_cleaning.data, 
+	  data_cleaning.data_process
+	WHERE 
+	management.step = $2 AND management.status = 1 AND
+	  management.management_id = data.management_id AND
+	  data.data_id = data_process.data_id AND
+	  (management.assignment = $1)		
+	ORDER BY management.assignment, management.management_id
+	LIMIT 10;	
+
+	
+      RETURN ref;
+    END;
+    $_$;
+
+
+ALTER FUNCTION data_cleaning.get_data_step(user_name character varying, step character varying) OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1255 OID 25139)
+-- Name: get_export_data(); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION get_export_data() RETURNS refcursor
+    LANGUAGE plpgsql
+    AS $$
+    DECLARE
+	ref refcursor;
+	
+    BEGIN
+	
+      OPEN ref FOR 
+	SELECT 
+  data.appl_id, 
+  data.address_id, 
+  data.cust_id, 
+  data.cust_type, 
+  data.address_type, 
+  data.state_desc, 
+  data.country_lms, 
+  data.city_lms, 
+  data.flag, 
+  data.address, 
+  data.address1, 
+  case when 
+	data_process.approve_address1 = '' 
+then 
+	case when 
+		data_process.qc_address1='' 
+	then 
+		data_process.verify_address1 
+	else 
+		data_process.qc_address1 
+	end 
+else 
+	data_process.approve_address1 
+end 
+as adrress_correct1, 
+  data.address2, 
+    case when 
+	data_process.approve_address2 = '' 
+then 
+	case when 
+		data_process.qc_address2='' 
+	then 
+		data_process.verify_address2 
+	else 
+		data_process.qc_address2 
+	end 
+else 
+	data_process.approve_address2 
+end 
+as adrress_correct2,
+  data.address3, 
+
+    case when 
+	data_process.approve_address3 = '' 
+then 
+	case when 
+		data_process.qc_address3='' 
+	then 
+		data_process.verify_address3 
+	else 
+		data_process.qc_address3 
+	end 
+else 
+	data_process.approve_address3 
+end 
+as adrress_correct3,
+  data.address4, 
+    case when 
+	data_process.approve_address4 = '' 
+then 
+	case when 
+		data_process.qc_address4='' 
+	then 
+		data_process.verify_address4 
+	else 
+		data_process.qc_address4 
+	end 
+else 
+	data_process.approve_address4 
+end 
+as adrress_correct4
+FROM 
+  data_cleaning.data, 
+  data_cleaning.data_process
+WHERE 
+  data.data_id = data_process.data_id
+	ORDER BY  data_process.data_id	;
+	
+      RETURN ref;
+    END;
+    $$;
+
+
+ALTER FUNCTION data_cleaning.get_export_data() OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1255 OID 25140)
+-- Name: get_percent_qc_card(); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION get_percent_qc_card() RETURNS integer
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    result integer;
+    BEGIN
+--return card
+	update data_cleaning.management
+	set status = 0,
+	assignment = null
+	where status<2 and step = 'qc';
+
+--select percent data for qc
+	update data_cleaning.management
+		set status = 1
+		where management_id in (
+		select management_id from (
+		select * from data_cleaning.management m
+		where m.step = 'qc' or m.step = 'approve'
+		order by status desc,random() 
+		limit (select count(*)::int from data_cleaning.management)*
+		(select config_value::int from data_cleaning.configuration where config_key='qc_percent')/100
+		) as sub
+		where sub.status = 0
+		);
+GET DIAGNOSTICS result = ROW_COUNT;
+	RETURN result;
+    END;
+    $$;
+
+
+ALTER FUNCTION data_cleaning.get_percent_qc_card() OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1255 OID 25141)
+-- Name: get_user_info(character varying, character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION get_user_info(login_username character varying, login_password character varying) RETURNS refcursor
+    LANGUAGE plpgsql
+    AS $_$
+    DECLARE
+      ref refcursor;
+    BEGIN
+      OPEN ref FOR SELECT * FROM data_cleaning.users u
+      WHERE u.user_name = $1 and u.password = $2 and u.status = true;	
+      RETURN ref;
+    END;
+    $_$;
+
+
+ALTER FUNCTION data_cleaning.get_user_info(login_username character varying, login_password character varying) OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1255 OID 25301)
+-- Name: getexportaddress1(integer); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION getexportaddress1(integer) RETURNS character varying
+    LANGUAGE plpgsql
+    AS $_$
+    DECLARE
+    address character varying;
+	
+    BEGIN
+	address:=(select COALESCE(trim(approve_address1) or (approve_address1 = ''),COALESCE(trim(qc_address1) or qc_address1='',verify_address1)) from data_cleaning.data_process where data_id = $1);	
+	if(address is null)
+	then
+		
+	end if;
+      RETURN address;
+    END;
+    $_$;
+
+
+ALTER FUNCTION data_cleaning.getexportaddress1(integer) OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1255 OID 25142)
+-- Name: insert_google_suggest(character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION insert_google_suggest(xmldata character varying) RETURNS void
+    LANGUAGE plpgsql
+    AS $_$
+    BEGIN
+
+	INSERT into data_cleaning.data_process(data_id,cleaning_address1,cleaning_address2,cleaning_address3,cleaning_address4,full_cleaning_address, google_suggest)
+	WITH x AS (SELECT $1::xml AS t)
+	SELECT CAST(CAST((xpath('//data_id/text()', node))[1] as varchar)as integer) as data_id,
+	CAST((xpath('//cleaning_address1/text()', node))[1] as varchar) as cleaning_address1,
+	CAST((xpath('//cleaning_address2/text()', node))[1] as varchar) as cleaning_address2,
+CAST((xpath('//cleaning_address3/text()', node))[1] as varchar) as cleaning_address3,
+CAST((xpath('//cleaning_address4/text()', node))[1] as varchar) as cleaning_address4,
+CAST((xpath('//full_cleaning_address/text()', node))[1] as varchar) as full_cleaning_address,
+	  CAST((xpath('//google_suggest/text()', node))[1] as varchar) as google_suggest
+	FROM (SELECT unnest(xpath('/Addresses/Address', t)) AS node FROM x) as sub
+	left join data_cleaning.data_process dp on CAST(CAST((xpath('//data_id/text()', node))[1] as varchar)as integer) = dp.data_id
+	where dp.data_id is null;
+
+	UPDATE data_cleaning.management 
+	SET  step = 'verify', status = 1, assignment = null
+	WHERE management_id in(
+	SELECT m.management_id from data_cleaning.management m inner join data_cleaning.data d on m.management_id = d.management_id 
+	WHERE d.data_id in(
+	WITH x AS (SELECT $1::xml AS t)
+	SELECT CAST(CAST((xpath('//data_id/text()', node))[1] as varchar)as integer) as data_id
+	FROM (SELECT unnest(xpath('/Addresses/Address', t)) AS node FROM x) as sub
+	inner join data_cleaning.data_process dp on CAST(CAST((xpath('//data_id/text()', node))[1] as varchar)as integer) = dp.data_id
+	)
+	);
+
+    END;
+    $_$;
+
+
+ALTER FUNCTION data_cleaning.insert_google_suggest(xmldata character varying) OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1255 OID 25143)
+-- Name: insert_user(character varying, character varying, character varying, character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION insert_user(param_user_name character varying, param_password character varying, param_role character varying, param_display_name character varying) RETURNS integer
+    LANGUAGE plpgsql
+    AS $_$
+    BEGIN
+	insert into data_cleaning.users (user_name, password,role,display_name,status)
+	values ( $1,$2,$3,$4, true);
+	--SELECT max(user_id) from data_cleaning.users;
+	return currval('data_cleaning.users_user_id_seq');
+    END;
+$_$;
+
+
+ALTER FUNCTION data_cleaning.insert_user(param_user_name character varying, param_password character varying, param_role character varying, param_display_name character varying) OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1255 OID 25144)
+-- Name: reset_all_data(); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION reset_all_data() RETURNS integer
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    result integer;
+    BEGIN
+
+	UPDATE data_cleaning.management m
+	SET	assignment=null,
+		step = 'verify',
+		status = 1;
+	Update data_cleaning.data_process
+	SET	verify_address1 = null,
+		verify_address2	= null,	
+		verify_address3= null,
+		verify_address4= null,
+		qc_address1= null,
+		qc_address2= null,
+		qc_address3= null,
+		qc_address4= null,
+		approve_address1= null,
+		approve_address2= null,
+		approve_address3= null,
+		approve_address4= null;
+
+	GET DIAGNOSTICS result = ROW_COUNT;
+	RETURN result;
+    END;
+    $$;
+
+
+ALTER FUNCTION data_cleaning.reset_all_data() OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1255 OID 25145)
+-- Name: return_card_by_step(character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION return_card_by_step(step character varying) RETURNS integer
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+    result integer;
+    BEGIN
+
+	UPDATE data_cleaning.management m
+	SET	assignment=null
+	WHERE m.step = $1;
+
+	GET DIAGNOSTICS result = ROW_COUNT;
+	RETURN result;
+    END;
+    $_$;
+
+
+ALTER FUNCTION data_cleaning.return_card_by_step(step character varying) OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1255 OID 25146)
+-- Name: save_approve_data(integer, integer, character varying, character varying, character varying, character varying, character varying, character varying, character varying, double precision, character varying, integer); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION save_approve_data(management_id integer, data_process_id integer, address1 character varying, address2 character varying, address3 character varying, address4 character varying, user_name character varying, start_time character varying, end_time character varying, totaltime double precision, step character varying, data_id integer) RETURNS integer
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+    result integer;
+    BEGIN
+
+	UPDATE data_cleaning.management m
+	SET	assignment=null,
+		status = 2
+	WHERE m.management_id = $1;
+	
+	UPDATE data_cleaning.data_process dp
+	SET 	approve_address1 = $3,
+		approve_address2 = $4,
+		approve_address3 = $5,
+		approve_address4 = $6
+	WHERE dp.data_process_id = $2;
+
+	INSERT INTO data_cleaning.work_detail(
+	user_name
+	,datework
+	,starttime
+	,endtime
+	,totaltime
+	,step
+	,session_start
+	,session_end
+	,session_total
+	,data_id
+	)
+	values ($7,now()::date::character varying,$8,$9,$10,$11,$8,$9,$10,$12);
+
+	GET DIAGNOSTICS result = ROW_COUNT;
+	RETURN result;
+    END;
+    $_$;
+
+
+ALTER FUNCTION data_cleaning.save_approve_data(management_id integer, data_process_id integer, address1 character varying, address2 character varying, address3 character varying, address4 character varying, user_name character varying, start_time character varying, end_time character varying, totaltime double precision, step character varying, data_id integer) OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1255 OID 25147)
+-- Name: save_qc_data(integer, integer, character varying, character varying, character varying, character varying, character varying, character varying, character varying, double precision, character varying, integer); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION save_qc_data(management_id integer, data_process_id integer, address1 character varying, address2 character varying, address3 character varying, address4 character varying, user_name character varying, start_time character varying, end_time character varying, totaltime double precision, step character varying, data_id integer) RETURNS integer
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+    result integer;
+    BEGIN
+
+	UPDATE data_cleaning.management m
+	SET	assignment=null,
+		step = 'approve'
+	WHERE m.management_id = $1;
+	
+	UPDATE data_cleaning.data_process dp
+	SET 	qc_address1 = $3,
+		qc_address2 = $4,
+		qc_address3 = $5,
+		qc_address4 = $6
+	WHERE dp.data_process_id = $2;
+
+	INSERT INTO data_cleaning.work_detail(
+	user_name
+	,datework
+	,starttime
+	,endtime
+	,totaltime
+	,step
+	,session_start
+	,session_end
+	,session_total
+	,data_id
+	)
+	values ($7,now()::date::character varying,$8,$9,$10,$11,$8,$9,$10,$12);
+
+	GET DIAGNOSTICS result = ROW_COUNT;
+	RETURN result;
+    END;
+    $_$;
+
+
+ALTER FUNCTION data_cleaning.save_qc_data(management_id integer, data_process_id integer, address1 character varying, address2 character varying, address3 character varying, address4 character varying, user_name character varying, start_time character varying, end_time character varying, totaltime double precision, step character varying, data_id integer) OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1255 OID 25148)
+-- Name: save_verify_data(integer, integer, character varying, character varying, character varying, character varying, character varying, character varying, character varying, double precision, character varying, integer); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION save_verify_data(management_id integer, data_process_id integer, address1 character varying, address2 character varying, address3 character varying, address4 character varying, user_name character varying, start_time character varying, end_time character varying, totaltime double precision, step character varying, data_id integer) RETURNS integer
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+    result integer;
+    BEGIN
+
+	UPDATE data_cleaning.management m
+	SET	assignment=null,
+		step = 'qc',
+		status = 0
+	WHERE m.management_id = $1;
+	
+	UPDATE data_cleaning.data_process dp
+	SET 	verify_address1 = $3,
+		verify_address2 = $4,
+		verify_address3 = $5,
+		verify_address4 = $6
+	WHERE dp.data_process_id = $2;
+
+	INSERT INTO data_cleaning.work_detail(
+	user_name
+	,datework
+	,starttime
+	,endtime
+	,totaltime
+	,step
+	,session_start
+	,session_end
+	,session_total
+	,data_id
+	)
+	values ($7,now()::date::character varying,$8,$9,$10,$11,$8,$9,$10,$12);
+
+	GET DIAGNOSTICS result = ROW_COUNT;
+	RETURN result;
+    END;
+    $_$;
+
+
+ALTER FUNCTION data_cleaning.save_verify_data(management_id integer, data_process_id integer, address1 character varying, address2 character varying, address3 character varying, address4 character varying, user_name character varying, start_time character varying, end_time character varying, totaltime double precision, step character varying, data_id integer) OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1255 OID 25234)
+-- Name: sp_process_address1(character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION sp_process_address1(character varying) RETURNS character varying
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+	var_result varchar;
+BEGIN
+	var_result := COALESCE(TRIM(initcap(data_cleaning.sp_replace_vietnamese_char($1))),'');
+	var_result := data_cleaning.sp_process_data_char_after_number(var_result);
+
+	var_result := REGEXP_REPLACE(var_result,'[.;]',' ','g');	
+	var_result := REPLACE(var_result,' , ',' ');	
+	var_result := TRIM(REPLACE(var_result,',',', '));
+	var_result := trim(REGEXP_REPLACE(var_result,'-',' - ','g'));	
+	
+	var_result := data_cleaning.sp_replace_common_phrase(var_result);
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'\\s+',' ','g'));
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'[-,/]+$',''));
+	var_result := TRIM(REGEXP_REPLACE(var_result,'^0$',''));
+
+	RETURN var_result;
+
+END;
+$_$;
+
+
+ALTER FUNCTION data_cleaning.sp_process_address1(character varying) OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1255 OID 25235)
+-- Name: sp_process_address2(character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION sp_process_address2(character varying) RETURNS character varying
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+	var_result varchar;
+BEGIN
+	var_result := COALESCE(TRIM(initcap(data_cleaning.sp_replace_vietnamese_char($1))),'');
+	var_result := data_cleaning.sp_process_data_char_after_number(var_result);
+	
+	var_result := REGEXP_REPLACE(var_result,'[.;]',' ','g');	
+	var_result := REPLACE(var_result,' , ',' ');	
+	var_result := TRIM(REPLACE(var_result,',',', '));
+	
+	var_result := data_cleaning.sp_replace_common_phrase(var_result);
+
+	var_result := regexp_replace(var_result,'(^| )Ban Ql_Ct( |$)','\\1Ban Quản Lý Công Trình\\2','ig');
+	var_result := regexp_replace(var_result,'^Cxvh$','Cư Xá Văn Hóa','ig');
+	
+	var_result := TRIM(REGEXP_REPLACE(var_result,'\\s+',' ','g'));
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'[-,/]+$',''));
+	var_result := TRIM(REGEXP_REPLACE(var_result,'^0$',''));
+
+	RETURN var_result;
+
+END;
+$_$;
+
+
+ALTER FUNCTION data_cleaning.sp_process_address2(character varying) OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1255 OID 25236)
+-- Name: sp_process_address3(character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION sp_process_address3(character varying) RETURNS character varying
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+	var_result varchar;
+BEGIN
+	var_result := COALESCE(TRIM(initcap(data_cleaning.sp_replace_vietnamese_char($1))),'');
+	var_result := data_cleaning.sp_process_data_char_after_number(var_result);
+	
+	var_result := REGEXP_REPLACE(var_result,'[.;]',' ','g');	
+	var_result := REPLACE(var_result,' , ',' ');	
+	var_result := TRIM(REPLACE(var_result,',',', '));
+	
+	var_result := trim(REGEXP_REPLACE(var_result,'-',' - ','g'));
+	var_result := data_cleaning.sp_replace_common_phrase(var_result);	
+
+	var_result := regexp_replace(var_result,'(^| )Ban Ql_Ct( |$)','\\1Ban Quản Lý Công Trình\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Đ ','\\1Đường ','ig');
+	var_result := regexp_replace(var_result,'(^| )ii( |$)','\\1II\\2','ig');
+	
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'\\s+',' ','g'));
+	var_result := regexp_replace(var_result,'^Cxvh$','Cư Xá Văn Hóa','ig');
+	var_result := regexp_replace(var_result,'^Cmt8$','Cách Mạng Tháng 8','ig');
+	var_result := regexp_replace(var_result,'^bưởi$','Đường Bưởi','ig');
+	var_result := regexp_replace(var_result,'^Khu Cty Cp Trúc Thôn$','Khu Công Ty Cổ Phần Trúc Thôn','ig');
+	var_result := regexp_replace(var_result,'^\\( Tổ 9 \\)$','Tổ 9','ig');
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'[-,/]+$',''));
+	var_result := TRIM(REGEXP_REPLACE(var_result,'^0$',''));
+
+	RETURN var_result;
+
+END;
+$_$;
+
+
+ALTER FUNCTION data_cleaning.sp_process_address3(character varying) OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1255 OID 25237)
+-- Name: sp_process_address4(character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION sp_process_address4(character varying) RETURNS character varying
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+	var_result varchar;
+BEGIN
+	var_result := COALESCE(TRIM(initcap(data_cleaning.sp_replace_vietnamese_char($1))),'');
+	var_result := data_cleaning.sp_process_data_char_after_number(var_result);
+	
+	var_result := REGEXP_REPLACE(var_result,'[.;]',' ','g');	
+	var_result := REPLACE(var_result,' , ',' ');	
+	var_result := TRIM(REPLACE(var_result,',',', '));
+	
+	var_result := trim(REGEXP_REPLACE(var_result,'-',' - ','g'));	
+	var_result := data_cleaning.sp_replace_common_phrase(var_result);
+	var_result := regexp_replace(var_result,'(^| )ii( |$)','\\1II\\2','ig');
+
+	var_result := regexp_replace(var_result,'(^| )(P|F)( |[0-9]+)','\\1Phường \\3','ig');
+	
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'\\s+',' ','g'));
+
+	var_result := replace(var_result,'Vn_Singapore','Việt Nam - Singapore');
+	
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'[-,/]+$',''));
+	var_result := TRIM(REGEXP_REPLACE(var_result,'^0$',''));
+
+	RETURN var_result;
+
+END;
+$_$;
+
+
+ALTER FUNCTION data_cleaning.sp_process_address4(character varying) OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1255 OID 25233)
+-- Name: sp_process_data_char_after_number(character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION sp_process_data_char_after_number(character varying) RETURNS character varying
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+	var_result varchar;
+	var_character varchar[];
+BEGIN
+	var_result := $1;
+
+	FOR var_character IN SELECT regexp_matches($1,'[0-9][a-z]','g')
+	LOOP
+		var_result = replace(var_result, var_character[1], upper(var_character[1]));
+
+	END LOOP;
+
+	RETURN var_result;
+
+END;
+$_$;
+
+
+ALTER FUNCTION data_cleaning.sp_process_data_char_after_number(character varying) OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1255 OID 25232)
+-- Name: sp_replace_common_phrase(character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION sp_replace_common_phrase(character varying) RETURNS character varying
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+	var_result varchar;
+BEGIN
+
+	var_result := COALESCE(TRIM($1),'');
+	var_result := regexp_replace(var_result,'(^| )Kcn( |$)','\\1Khu Công Nghiệp\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Kcx( |$)','\\1Khu Chế Xuất\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Kdc( |$)','\\1Khu Dân Cư\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Ksx( |$)','\\1Khu Sản Xuất\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Kdl( |$)','\\1Khu Du Lịch\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Cụm Cn( |$)','\\1Cụm Công Nghiệp\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Khu Cn( |$)','\\1Khu Công Nghiệp\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Ccn( |$)','\\1Cụm Công Nghiệp\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Kp( |$)','\\1Khu Phố\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Nt( |$)','\\1Nhà Trọ\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Ct( |$)','\\1Công Trình\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )C/?C( |$)','\\1Chung Cư\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Kp','\\1Khu Phố ','ig');
+	var_result := regexp_replace(var_result,'(^| )Ql','\\1Quốc Lộ ','ig');
+	var_result := regexp_replace(var_result,'(^| )Tl','\\1Tỉnh Lộ ','ig');
+	var_result := regexp_replace(var_result,'(^| )tt','\\1Thị Trấn ','ig');
+	var_result := regexp_replace(var_result,'(^| )tx','\\1Thị Xã ','ig');
+	var_result := regexp_replace(var_result,'(^| )Kv','\\1Khu Vực ','ig');
+	var_result := regexp_replace(var_result,'(^| )kđtm ','\\1Khu Đô Thị Mới ','ig');
+	var_result := regexp_replace(var_result,'(^| )K ?Đô Thị Mới ','\\1Khu Đô Thị Mới ','ig');
+	var_result := regexp_replace(var_result,'(^| )kđt ','\\1Khu Đô Thị ','ig');
+	var_result := regexp_replace(var_result,'(^| )tdp ','\\1Tổ Dân Phố ','ig');
+	
+
+
+	RETURN var_result;
+
+END;
+$_$;
+
+
+ALTER FUNCTION data_cleaning.sp_replace_common_phrase(character varying) OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1255 OID 25231)
+-- Name: sp_replace_vietnamese_char(character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION sp_replace_vietnamese_char(character varying) RETURNS character varying
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE 
+	var_result varchar;
+BEGIN
+	var_result := $1;
+	var_result := replace(var_result,'Á','Á');
+	var_result := replace(var_result,'À','À');
+	var_result := replace(var_result,'Ả','Ả');
+	var_result := replace(var_result,'Ã','Ã');
+	var_result := replace(var_result,'Ạ','Ạ');
+	var_result := replace(var_result,'Ắ','Ắ');
+	var_result := replace(var_result,'Ằ','Ằ');
+	var_result := replace(var_result,'Ẳ','Ẳ');
+	var_result := replace(var_result,'Ẵ','Ẵ');
+	var_result := replace(var_result,'Ặ','Ặ');
+	var_result := replace(var_result,'Ấ','Ấ');
+	var_result := replace(var_result,'Ầ','Ầ');
+	var_result := replace(var_result,'Ẩ','Ẩ');
+	var_result := replace(var_result,'Ẫ','Ẫ');
+	var_result := replace(var_result,'Ậ','Ậ');
+	var_result := replace(var_result,'É','É');
+	var_result := replace(var_result,'È','È');
+	var_result := replace(var_result,'Ẻ','Ẻ');
+	var_result := replace(var_result,'Ẽ','Ẽ');
+	var_result := replace(var_result,'Ẹ','Ẹ');
+	var_result := replace(var_result,'Ế','Ế');
+	var_result := replace(var_result,'Ề','Ề');
+	var_result := replace(var_result,'Ể','Ể');
+	var_result := replace(var_result,'Ễ','Ễ');
+	var_result := replace(var_result,'Ệ','Ệ');
+	var_result := replace(var_result,'Ó','Ó');
+	var_result := replace(var_result,'Ò','Ò');
+	var_result := replace(var_result,'Ỏ','Ỏ');
+	var_result := replace(var_result,'Õ','Õ');
+	var_result := replace(var_result,'Ọ','Ọ');
+	var_result := replace(var_result,'Ố','Ố');
+	var_result := replace(var_result,'Ồ','Ồ');
+	var_result := replace(var_result,'Ổ','Ổ');
+	var_result := replace(var_result,'Ỗ','Ỗ');
+	var_result := replace(var_result,'Ộ','Ộ');
+	var_result := replace(var_result,'Ớ','Ớ');
+	var_result := replace(var_result,'Ờ','Ờ');
+	var_result := replace(var_result,'Ở','Ở');
+	var_result := replace(var_result,'Ỡ','Ỡ');
+	var_result := replace(var_result,'Ợ','Ợ');
+	var_result := replace(var_result,'Í','Í');
+	var_result := replace(var_result,'Ì','Ì');
+	var_result := replace(var_result,'Ỉ','Ỉ');
+	var_result := replace(var_result,'Ĩ','Ĩ');
+	var_result := replace(var_result,'Ị','Ị');
+	var_result := replace(var_result,'Ú','Ú');
+	var_result := replace(var_result,'Ù','Ù');
+	var_result := replace(var_result,'Ủ','Ủ');
+	var_result := replace(var_result,'Ũ','Ũ');
+	var_result := replace(var_result,'Ụ','Ụ');
+	var_result := replace(var_result,'Ứ','Ứ');
+	var_result := replace(var_result,'Ừ','Ừ');
+	var_result := replace(var_result,'Ử','Ử');
+	var_result := replace(var_result,'Ữ','Ữ');
+	var_result := replace(var_result,'Ự','Ự');
+	
+	return var_result;
+END;
+$_$;
+
+
+ALTER FUNCTION data_cleaning.sp_replace_vietnamese_char(character varying) OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1255 OID 25149)
+-- Name: update_all_config(character varying); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION update_all_config(xmldata character varying) RETURNS integer
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+    result integer;
+    BEGIN
+
+	UPDATE data_cleaning.configuration as c
+	SET  config_value = c2.config_value
+	FROM (	
+	WITH x AS (SELECT $1::xml AS t)
+	SELECT CAST(CAST((xpath('//config_id/text()', node))[1] as varchar)as integer) as config_id,
+	CAST((xpath('//config_key/text()', node))[1] as varchar) as config_key,
+	CAST((xpath('//config_value/text()', node))[1] as varchar) as config_value
+	FROM (SELECT unnest(xpath('/Configs/Config', t)) AS node FROM x) as sub
+	) as c2(config_id,config_key,config_value)
+	WHERE c2.config_id = c.config_id;
+	GET DIAGNOSTICS result = ROW_COUNT;
+	RETURN result;
+    END;
+    $_$;
+
+
+ALTER FUNCTION data_cleaning.update_all_config(xmldata character varying) OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1255 OID 25150)
+-- Name: update_user(integer, character varying, character varying, character varying, boolean); Type: FUNCTION; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE FUNCTION update_user(param_user_id integer, param_password character varying, param_role character varying, param_display_name character varying, param_status boolean) RETURNS integer
+    LANGUAGE plpgsql
+    AS $_$
+DECLARE
+    result integer;
+    BEGIN
+	if($5 = false)
+	then
+		update data_cleaning.users 
+		set status = false
+		where user_id = $1;
+	else if($2 = '')
+	then
+		update data_cleaning.users 
+		set
+		 role=$3,
+		 display_name=$4,
+		status = $5
+		where user_id = $1;
+else
+		update data_cleaning.users 
+		set
+		 password=$2,
+		 role=$3,
+		 display_name=$4,
+		status = $5
+		where user_id = $1;
+	end if;
+end if;
+
+
+	GET DIAGNOSTICS result = ROW_COUNT;
+	RETURN result;
+END;
+    $_$;
+
+
+ALTER FUNCTION data_cleaning.update_user(param_user_id integer, param_password character varying, param_role character varying, param_display_name character varying, param_status boolean) OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 173 (class 1259 OID 25151)
+-- Name: configuration; Type: TABLE; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE configuration (
+    config_id integer NOT NULL,
+    config_key character varying,
+    config_value character varying
+);
+
+
+ALTER TABLE configuration OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 25157)
+-- Name: Configuration_config_id_seq; Type: SEQUENCE; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE SEQUENCE "Configuration_config_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "Configuration_config_id_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2085 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: Configuration_config_id_seq; Type: SEQUENCE OWNED BY; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER SEQUENCE "Configuration_config_id_seq" OWNED BY configuration.config_id;
+
+
+--
+-- TOC entry 175 (class 1259 OID 25159)
+-- Name: data; Type: TABLE; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE data (
+    data_id integer NOT NULL,
+    management_id integer,
+    appl_id character varying,
+    address_id character varying,
+    cust_id character varying,
+    cust_type character varying,
+    address_type character varying,
+    state_desc character varying,
+    country_lms character varying,
+    city_lms character varying,
+    flag character varying,
+    address character varying,
+    adrress_correct character varying,
+    address1 character varying,
+    adrress_correct1 character varying,
+    address2 character varying,
+    adrress_correct2 character varying,
+    address3 character varying,
+    adrress_correct3 character varying,
+    address4 character varying,
+    adrress_correct4 character varying,
+    processed_dttm character varying
+);
+
+
+ALTER TABLE data OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 25165)
+-- Name: data_data_id_seq; Type: SEQUENCE; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE SEQUENCE data_data_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE data_data_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2086 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: data_data_id_seq; Type: SEQUENCE OWNED BY; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER SEQUENCE data_data_id_seq OWNED BY data.data_id;
+
+
+--
+-- TOC entry 185 (class 1259 OID 25250)
+-- Name: data_process; Type: TABLE; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE data_process (
+    data_id integer,
+    verify_address1 character varying,
+    verify_address2 character varying,
+    verify_address3 character varying,
+    verify_address4 character varying,
+    qc_address1 character varying,
+    qc_address2 character varying,
+    qc_address3 character varying,
+    qc_address4 character varying,
+    approve_address1 character varying,
+    approve_address2 character varying,
+    approve_address3 character varying,
+    approve_address4 character varying,
+    cleaning_address1 character varying,
+    cleaning_address2 character varying,
+    cleaning_address3 character varying,
+    cleaning_address4 character varying,
+    full_cleaning_address character varying,
+    google_suggest character varying,
+    data_process_id integer NOT NULL
+);
+
+
+ALTER TABLE data_process OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 25287)
+-- Name: data_process_data_process_id_seq; Type: SEQUENCE; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE SEQUENCE data_process_data_process_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE data_process_data_process_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2087 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: data_process_data_process_id_seq; Type: SEQUENCE OWNED BY; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER SEQUENCE data_process_data_process_id_seq OWNED BY data_process.data_process_id;
+
+
+--
+-- TOC entry 177 (class 1259 OID 25175)
+-- Name: google_search; Type: TABLE; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE google_search (
+    result_id integer NOT NULL,
+    data_id integer,
+    goggle_suggest_text character varying
+);
+
+
+ALTER TABLE google_search OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 25181)
+-- Name: google_search_result_id_seq; Type: SEQUENCE; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE SEQUENCE google_search_result_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE google_search_result_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2088 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: google_search_result_id_seq; Type: SEQUENCE OWNED BY; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER SEQUENCE google_search_result_id_seq OWNED BY google_search.result_id;
+
+
+--
+-- TOC entry 179 (class 1259 OID 25183)
+-- Name: management; Type: TABLE; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE management (
+    management_id integer NOT NULL,
+    step character varying,
+    assignment character varying,
+    status integer
+);
+
+
+ALTER TABLE management OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 25189)
+-- Name: management_management_id_seq; Type: SEQUENCE; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE SEQUENCE management_management_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE management_management_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2089 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: management_management_id_seq; Type: SEQUENCE OWNED BY; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER SEQUENCE management_management_id_seq OWNED BY management.management_id;
+
+
+--
+-- TOC entry 181 (class 1259 OID 25191)
+-- Name: users; Type: TABLE; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE users (
+    user_name character varying(20),
+    password character varying(50),
+    role character varying(20),
+    user_id integer NOT NULL,
+    display_name character varying,
+    status boolean
+);
+
+
+ALTER TABLE users OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 25197)
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE SEQUENCE users_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE users_user_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2090 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER SEQUENCE users_user_id_seq OWNED BY users.user_id;
+
+
+--
+-- TOC entry 183 (class 1259 OID 25199)
+-- Name: work_detail; Type: TABLE; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE work_detail (
+    work_detail_id integer NOT NULL,
+    user_name character varying,
+    datework character varying,
+    starttime character varying,
+    endtime character varying,
+    totaltime double precision,
+    step character varying,
+    session_start character varying,
+    session_end character varying,
+    session_total double precision,
+    data_id integer
+);
+
+
+ALTER TABLE work_detail OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 25205)
+-- Name: work_detail_work_detail_id_seq; Type: SEQUENCE; Schema: data_cleaning; Owner: postgres
+--
+
+CREATE SEQUENCE work_detail_work_detail_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE work_detail_work_detail_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2091 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: work_detail_work_detail_id_seq; Type: SEQUENCE OWNED BY; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER SEQUENCE work_detail_work_detail_id_seq OWNED BY work_detail.work_detail_id;
+
+
+--
+-- TOC entry 1949 (class 2604 OID 25207)
+-- Name: config_id; Type: DEFAULT; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER TABLE ONLY configuration ALTER COLUMN config_id SET DEFAULT nextval('"Configuration_config_id_seq"'::regclass);
+
+
+--
+-- TOC entry 1950 (class 2604 OID 25208)
+-- Name: data_id; Type: DEFAULT; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER TABLE ONLY data ALTER COLUMN data_id SET DEFAULT nextval('data_data_id_seq'::regclass);
+
+
+--
+-- TOC entry 1955 (class 2604 OID 25289)
+-- Name: data_process_id; Type: DEFAULT; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER TABLE ONLY data_process ALTER COLUMN data_process_id SET DEFAULT nextval('data_process_data_process_id_seq'::regclass);
+
+
+--
+-- TOC entry 1951 (class 2604 OID 25210)
+-- Name: result_id; Type: DEFAULT; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER TABLE ONLY google_search ALTER COLUMN result_id SET DEFAULT nextval('google_search_result_id_seq'::regclass);
+
+
+--
+-- TOC entry 1952 (class 2604 OID 25211)
+-- Name: management_id; Type: DEFAULT; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER TABLE ONLY management ALTER COLUMN management_id SET DEFAULT nextval('management_management_id_seq'::regclass);
+
+
+--
+-- TOC entry 1953 (class 2604 OID 25212)
+-- Name: user_id; Type: DEFAULT; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER TABLE ONLY users ALTER COLUMN user_id SET DEFAULT nextval('users_user_id_seq'::regclass);
+
+
+--
+-- TOC entry 1954 (class 2604 OID 25213)
+-- Name: work_detail_id; Type: DEFAULT; Schema: data_cleaning; Owner: postgres
+--
+
+ALTER TABLE ONLY work_detail ALTER COLUMN work_detail_id SET DEFAULT nextval('work_detail_work_detail_id_seq'::regclass);
+
+
+--
+-- TOC entry 1957 (class 2606 OID 25215)
+-- Name: configuration_pkey; Type: CONSTRAINT; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY configuration
+    ADD CONSTRAINT configuration_pkey PRIMARY KEY (config_id);
+
+
+--
+-- TOC entry 1959 (class 2606 OID 25217)
+-- Name: data_pkey; Type: CONSTRAINT; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY data
+    ADD CONSTRAINT data_pkey PRIMARY KEY (data_id);
+
+
+--
+-- TOC entry 1971 (class 2606 OID 25297)
+-- Name: data_process_pkey; Type: CONSTRAINT; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY data_process
+    ADD CONSTRAINT data_process_pkey PRIMARY KEY (data_process_id);
+
+
+--
+-- TOC entry 1961 (class 2606 OID 25221)
+-- Name: google_search_pkey; Type: CONSTRAINT; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY google_search
+    ADD CONSTRAINT google_search_pkey PRIMARY KEY (result_id);
+
+
+--
+-- TOC entry 1963 (class 2606 OID 25223)
+-- Name: management_pkey; Type: CONSTRAINT; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY management
+    ADD CONSTRAINT management_pkey PRIMARY KEY (management_id);
+
+
+--
+-- TOC entry 1965 (class 2606 OID 25225)
+-- Name: users_pkey; Type: CONSTRAINT; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- TOC entry 1967 (class 2606 OID 25227)
+-- Name: users_user_name_key; Type: CONSTRAINT; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_user_name_key UNIQUE (user_name);
+
+
+--
+-- TOC entry 1969 (class 2606 OID 25229)
+-- Name: work_detail_pkey; Type: CONSTRAINT; Schema: data_cleaning; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY work_detail
+    ADD CONSTRAINT work_detail_pkey PRIMARY KEY (work_detail_id);
+
+
+-- Completed on 2016-01-05 10:59:05
+
+--
+-- PostgreSQL database dump complete
+--
+
+CREATE OR REPLACE FUNCTION sp_replace_vietnamese_char(character varying)
+  RETURNS character varying AS
+$BODY$
+DECLARE 
+	var_result varchar;
+BEGIN
+	var_result := $1;
+	var_result := replace(var_result,'Á','Á');
+	var_result := replace(var_result,'À','À');
+	var_result := replace(var_result,'Ả','Ả');
+	var_result := replace(var_result,'Ã','Ã');
+	var_result := replace(var_result,'Ạ','Ạ');
+	var_result := replace(var_result,'Ắ','Ắ');
+	var_result := replace(var_result,'Ằ','Ằ');
+	var_result := replace(var_result,'Ẳ','Ẳ');
+	var_result := replace(var_result,'Ẵ','Ẵ');
+	var_result := replace(var_result,'Ặ','Ặ');
+	var_result := replace(var_result,'Ấ','Ấ');
+	var_result := replace(var_result,'Ầ','Ầ');
+	var_result := replace(var_result,'Ẩ','Ẩ');
+	var_result := replace(var_result,'Ẫ','Ẫ');
+	var_result := replace(var_result,'Ậ','Ậ');
+	var_result := replace(var_result,'É','É');
+	var_result := replace(var_result,'È','È');
+	var_result := replace(var_result,'Ẻ','Ẻ');
+	var_result := replace(var_result,'Ẽ','Ẽ');
+	var_result := replace(var_result,'Ẹ','Ẹ');
+	var_result := replace(var_result,'Ế','Ế');
+	var_result := replace(var_result,'Ề','Ề');
+	var_result := replace(var_result,'Ể','Ể');
+	var_result := replace(var_result,'Ễ','Ễ');
+	var_result := replace(var_result,'Ệ','Ệ');
+	var_result := replace(var_result,'Ó','Ó');
+	var_result := replace(var_result,'Ò','Ò');
+	var_result := replace(var_result,'Ỏ','Ỏ');
+	var_result := replace(var_result,'Õ','Õ');
+	var_result := replace(var_result,'Ọ','Ọ');
+	var_result := replace(var_result,'Ố','Ố');
+	var_result := replace(var_result,'Ồ','Ồ');
+	var_result := replace(var_result,'Ổ','Ổ');
+	var_result := replace(var_result,'Ỗ','Ỗ');
+	var_result := replace(var_result,'Ộ','Ộ');
+	var_result := replace(var_result,'Ớ','Ớ');
+	var_result := replace(var_result,'Ờ','Ờ');
+	var_result := replace(var_result,'Ở','Ở');
+	var_result := replace(var_result,'Ỡ','Ỡ');
+	var_result := replace(var_result,'Ợ','Ợ');
+	var_result := replace(var_result,'Í','Í');
+	var_result := replace(var_result,'Ì','Ì');
+	var_result := replace(var_result,'Ỉ','Ỉ');
+	var_result := replace(var_result,'Ĩ','Ĩ');
+	var_result := replace(var_result,'Ị','Ị');
+	var_result := replace(var_result,'Ú','Ú');
+	var_result := replace(var_result,'Ù','Ù');
+	var_result := replace(var_result,'Ủ','Ủ');
+	var_result := replace(var_result,'Ũ','Ũ');
+	var_result := replace(var_result,'Ụ','Ụ');
+	var_result := replace(var_result,'Ứ','Ứ');
+	var_result := replace(var_result,'Ừ','Ừ');
+	var_result := replace(var_result,'Ử','Ử');
+	var_result := replace(var_result,'Ữ','Ữ');
+	var_result := replace(var_result,'Ự','Ự');
+	
+	return var_result;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+
+CREATE OR REPLACE FUNCTION sp_replace_common_phrase(character varying)
+  RETURNS character varying AS
+$BODY$
+DECLARE
+	var_result varchar;
+BEGIN
+
+	var_result := COALESCE(TRIM($1),'');
+	var_result := regexp_replace(var_result,'(^| )Kcn( |$)','\\1Khu Công Nghiệp\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Kcx( |$)','\\1Khu Chế Xuất\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Kdc( |$)','\\1Khu Dân Cư\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Ksx( |$)','\\1Khu Sản Xuất\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Kdl( |$)','\\1Khu Du Lịch\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Cụm Cn( |$)','\\1Cụm Công Nghiệp\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Khu Cn( |$)','\\1Khu Công Nghiệp\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Ccn( |$)','\\1Cụm Công Nghiệp\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Kp( |$)','\\1Khu Phố\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Nt( |$)','\\1Nhà Trọ\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Ct( |$)','\\1Công Trình\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )C/?C( |$)','\\1Chung Cư\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Kp','\\1Khu Phố ','ig');
+	var_result := regexp_replace(var_result,'(^| )Ql','\\1Quốc Lộ ','ig');
+	var_result := regexp_replace(var_result,'(^| )Tl','\\1Tỉnh Lộ ','ig');
+	var_result := regexp_replace(var_result,'(^| )tt','\\1Thị Trấn ','ig');
+	var_result := regexp_replace(var_result,'(^| )tx','\\1Thị Xã ','ig');
+	var_result := regexp_replace(var_result,'(^| )Kv','\\1Khu Vực ','ig');
+	var_result := regexp_replace(var_result,'(^| )kđtm ','\\1Khu Đô Thị Mới ','ig');
+	var_result := regexp_replace(var_result,'(^| )K ?Đô Thị Mới ','\\1Khu Đô Thị Mới ','ig');
+	var_result := regexp_replace(var_result,'(^| )kđt ','\\1Khu Đô Thị ','ig');
+	var_result := regexp_replace(var_result,'(^| )tdp ','\\1Tổ Dân Phố ','ig');
+	
+
+
+	RETURN var_result;
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+CREATE OR REPLACE FUNCTION sp_process_data_char_after_number(character varying)
+  RETURNS character varying AS
+$BODY$
+DECLARE
+	var_result varchar;
+	var_character varchar[];
+BEGIN
+	var_result := $1;
+
+	FOR var_character IN SELECT regexp_matches($1,'[0-9][a-z]','g')
+	LOOP
+		var_result = replace(var_result, var_character[1], upper(var_character[1]));
+
+	END LOOP;
+
+	RETURN var_result;
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+CREATE OR REPLACE FUNCTION sp_process_address1(character varying)
+  RETURNS character varying AS
+$BODY$
+DECLARE
+	var_result varchar;
+BEGIN
+	var_result := COALESCE(TRIM(initcap(sp_replace_vietnamese_char($1))),'');
+	var_result := sp_process_data_char_after_number(var_result);
+
+	var_result := REGEXP_REPLACE(var_result,'[.;]',' ','g');	
+	var_result := REPLACE(var_result,' , ',' ');	
+	var_result := TRIM(REPLACE(var_result,',',', '));
+	var_result := trim(REGEXP_REPLACE(var_result,'-',' - ','g'));	
+	
+	var_result := sp_replace_common_phrase(var_result);
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'\\s+',' ','g'));
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'[-,/]+$',''));
+	var_result := TRIM(REGEXP_REPLACE(var_result,'^0$',''));
+
+	RETURN var_result;
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+CREATE OR REPLACE FUNCTION sp_process_address2(character varying)
+  RETURNS character varying AS
+$BODY$
+DECLARE
+	var_result varchar;
+BEGIN
+	var_result := COALESCE(TRIM(initcap(sp_replace_vietnamese_char($1))),'');
+	var_result := sp_process_data_char_after_number(var_result);
+	
+	var_result := REGEXP_REPLACE(var_result,'[.;]',' ','g');	
+	var_result := REPLACE(var_result,' , ',' ');	
+	var_result := TRIM(REPLACE(var_result,',',', '));
+	
+	var_result := sp_replace_common_phrase(var_result);
+
+	var_result := regexp_replace(var_result,'(^| )Ban Ql_Ct( |$)','\\1Ban Quản Lý Công Trình\\2','ig');
+	var_result := regexp_replace(var_result,'^Cxvh$','Cư Xá Văn Hóa','ig');
+	
+	var_result := TRIM(REGEXP_REPLACE(var_result,'\\s+',' ','g'));
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'[-,/]+$',''));
+	var_result := TRIM(REGEXP_REPLACE(var_result,'^0$',''));
+
+	RETURN var_result;
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+CREATE OR REPLACE FUNCTION sp_process_address3(character varying)
+  RETURNS character varying AS
+$BODY$
+DECLARE
+	var_result varchar;
+BEGIN
+	var_result := COALESCE(TRIM(initcap(sp_replace_vietnamese_char($1))),'');
+	var_result := sp_process_data_char_after_number(var_result);
+	
+	var_result := REGEXP_REPLACE(var_result,'[.;]',' ','g');	
+	var_result := REPLACE(var_result,' , ',' ');	
+	var_result := TRIM(REPLACE(var_result,',',', '));
+	
+	var_result := trim(REGEXP_REPLACE(var_result,'-',' - ','g'));
+	var_result := sp_replace_common_phrase(var_result);	
+
+	var_result := regexp_replace(var_result,'(^| )Ban Ql_Ct( |$)','\\1Ban Quản Lý Công Trình\\2','ig');
+	var_result := regexp_replace(var_result,'(^| )Đ ','\\1Đường ','ig');
+	var_result := regexp_replace(var_result,'(^| )ii( |$)','\\1II\\2','ig');
+	
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'\\s+',' ','g'));
+	var_result := regexp_replace(var_result,'^Cxvh$','Cư Xá Văn Hóa','ig');
+	var_result := regexp_replace(var_result,'^Cmt8$','Cách Mạng Tháng 8','ig');
+	var_result := regexp_replace(var_result,'^bưởi$','Đường Bưởi','ig');
+	var_result := regexp_replace(var_result,'^Khu Cty Cp Trúc Thôn$','Khu Công Ty Cổ Phần Trúc Thôn','ig');
+	var_result := regexp_replace(var_result,'^\\( Tổ 9 \\)$','Tổ 9','ig');
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'[-,/]+$',''));
+	var_result := TRIM(REGEXP_REPLACE(var_result,'^0$',''));
+
+	RETURN var_result;
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+CREATE OR REPLACE FUNCTION sp_process_address4(character varying)
+  RETURNS character varying AS
+$BODY$
+DECLARE
+	var_result varchar;
+BEGIN
+	var_result := COALESCE(TRIM(initcap(sp_replace_vietnamese_char($1))),'');
+	var_result := sp_process_data_char_after_number(var_result);
+	
+	var_result := REGEXP_REPLACE(var_result,'[.;]',' ','g');	
+	var_result := REPLACE(var_result,' , ',' ');	
+	var_result := TRIM(REPLACE(var_result,',',', '));
+	
+	var_result := trim(REGEXP_REPLACE(var_result,'-',' - ','g'));	
+	var_result := sp_replace_common_phrase(var_result);
+	var_result := regexp_replace(var_result,'(^| )ii( |$)','\\1II\\2','ig');
+
+	var_result := regexp_replace(var_result,'(^| )(P|F)( |[0-9]+)','\\1Phường \\3','ig');
+	
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'\\s+',' ','g'));
+
+	var_result := replace(var_result,'Vn_Singapore','Việt Nam - Singapore');
+	
+
+	var_result := TRIM(REGEXP_REPLACE(var_result,'[-,/]+$',''));
+	var_result := TRIM(REGEXP_REPLACE(var_result,'^0$',''));
+
+	RETURN var_result;
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+insert into data_cleaning.users (user_name, password, role, display_name, status)
+values('admin','25f9e794323b453885f5181f1b624d0b','1|1|1|1','Administrator',true);
+
+insert into data_cleaning.configuration (config_key, config_value)
+values('qc_percent','50');
+insert into data_cleaning.configuration (config_key, config_value)
+values('running_interval','5');
