@@ -102,9 +102,19 @@ GoogleAPI.prototype = {
             before = "";
         }
         var googleAPI = this;
-        if (loop > 5) {
+        if (loop > 5 || address=="") {
+            $("#res").html(before);
+            googleAPI.SuggestList.push({
+                "data_id": googleAPI.CurrentId,
+                "google_suggest": before,
+                "cleaning_address1": googleAPI.CurrentItem.adrress_correct1,
+                "cleaning_address2": googleAPI.CurrentItem.adrress_correct2,
+                "cleaning_address3": googleAPI.CurrentItem.adrress_correct3,
+                "cleaning_address4": googleAPI.CurrentItem.adrress_correct4,
+                "full_cleaning_address": googleAPI.CurrentItem.adrress_correct
+            });
             googleAPI.HasCompleted = true;
-            return;
+            return res;
         }
         var searchValue = address ;
         $("#keyword").html(searchValue);
@@ -112,7 +122,7 @@ GoogleAPI.prototype = {
         geocoder.geocode({ 'address': searchValue }, function (results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
                 var res = before + googleAPI.BuildAdrressList(results);
-                if (loop + results.length >= 5 || !address.contains(',')) {
+                if (loop + results.length >= 5 || !address.indexOf(',')>0) {
                     loop += results.length;
                     $("#res").html(res);
                     googleAPI.SuggestList.push({ 
