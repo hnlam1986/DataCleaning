@@ -97,3 +97,11 @@ function ResetCardMessage(isSucceess) {
         ShowBlindMessage('Reset card unsuccess or don\'t have more card to reset!', '#ResetMessageContent', 'red');
     }
 }
+
+function Comparation(string1, string2) {
+    var dmp = new diff_match_patch();
+    var d = dmp.diff_main(string1, string2);
+    dmp.diff_cleanupSemantic(d);
+    var ds = dmp.diff_prettyHtml(d);
+    $("#comparation_output").html(ds);
+}

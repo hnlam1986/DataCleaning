@@ -17,27 +17,31 @@
                     <div class="panel-title">Verify Data</div>
                 </div>
                 <div class="panel-contain" id="divCleaningData">
+                    <div id="fullOriginalAddressContain">
+                        <label id="Label1">Original address: </label>
+                        <label id="lblOriginalFullAddress" class="bold-text"></label><label id="Label2" class="lblCity bold-text" ></label>
+                    </div>
                     <div id="fullAddressContain">
                         <label id="lblFullAddress">Full address: </label>
-                        <label id="lblFullAddressValue"></label>
+                        <label id="lblFullAddressValue" class="bold-text"></label><label id="lblCity" class="lblCity bold-text"></label>
                     </div>
                     <table cellspacing="10">
                         <tr>
                             <td>Address 1:</td>
                             <td>
-                                <input type="text" id="txtAddress1" class="login-textbox" /></td>
+                                <input type="text" id="txtAddress1" class="login-textbox" tabindex="1"/></td>
                             <td>Address 3:</td>
                             <td>
-                                <input type="text" id="txtAddress3" class="login-textbox" /></td>
+                                <input type="text" id="txtAddress3" class="login-textbox" tabindex="3"/></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Address 2:</td>
                             <td>
-                                <input type="text" id="txtAddress2" class="login-textbox" /></td>
+                                <input type="text" id="txtAddress2" class="login-textbox" tabindex="2"/></td>
                             <td>Address 4:</td>
                             <td>
-                                <input type="text" id="txtAddress4" class="login-textbox" /></td>
+                                <input type="text" id="txtAddress4" class="login-textbox" tabindex="4"/></td>
                             <td>
                                 <input type="button" value="Next Card" disabled="disabled" id="btnSave"/></td>
                         </tr>

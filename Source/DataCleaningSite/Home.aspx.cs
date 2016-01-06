@@ -16,6 +16,7 @@ namespace DataCleaningSite
             {
                 lblDisplayname.Text = " " + login.UserLogin.display_name;
                 lblStarttime.Text = login.StartTime.ToString("dd/MM/yyyy hh:mm:ss");
+
             }
         }
     }

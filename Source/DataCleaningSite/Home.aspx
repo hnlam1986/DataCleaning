@@ -22,7 +22,7 @@
                                 Start Time:<asp:Label ID="lblStarttime" runat="server" Text=""></asp:Label>
                             </div>
                             <div id="divLoginSubmit" class="padding-top-5px">
-                                <a href="/default.aspx?logout=true">Logout</a>
+                                <a href="/default.aspx?logout=true">Logout</a> | <a href="/changepassword.aspx">Change Password</a>
 
                             </div>
                             

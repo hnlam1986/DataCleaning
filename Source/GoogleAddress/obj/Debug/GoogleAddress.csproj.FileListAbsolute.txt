@@ -19,3 +19,24 @@ D:\Lam Huynh\Data Cleaning\GoogleAddress\GoogleAddress\bin\Debug\fi\Npgsql.resou
 D:\Lam Huynh\Data Cleaning\GoogleAddress\GoogleAddress\bin\Debug\fr\Npgsql.resources.dll
 D:\Lam Huynh\Data Cleaning\GoogleAddress\GoogleAddress\bin\Debug\ja\Npgsql.resources.dll
 D:\Lam Huynh\Data Cleaning\GoogleAddress\GoogleAddress\bin\Debug\zh-CN\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\GoogleAddress.exe.config
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\obj\Debug\GoogleAddress.exe
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\obj\Debug\GoogleAddress.pdb
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\GoogleAddress.exe
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\GoogleAddress.pdb
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\DBHelper.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\Npgsql.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\Mono.Security.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\DBHelper.pdb
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\Npgsql.pdb
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\Npgsql.xml
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\de\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\es\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\fi\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\fr\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\ja\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\bin\Debug\zh-CN\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\obj\Debug\GoogleAddress.csprojResolveAssemblyReference.cache
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\obj\Debug\GoogleAddress.Form1.resources
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\obj\Debug\GoogleAddress.Properties.Resources.resources
+D:\Lam Huynh\GitHub\DataCleaning\Source\GoogleAddress\obj\Debug\GoogleAddress.csproj.GenerateResource.Cache

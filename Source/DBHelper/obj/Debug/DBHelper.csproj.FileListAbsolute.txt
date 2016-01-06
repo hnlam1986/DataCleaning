@@ -13,3 +13,18 @@ D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\fr\Npgsql.resources.
 D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\ja\Npgsql.resources.dll
 D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\bin\Debug\zh-CN\Npgsql.resources.dll
 D:\Lam Huynh\Data Cleaning\GoogleAddress\DBHelper\obj\Debug\DBHelper.csprojResolveAssemblyReference.cache
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\DBHelper.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\DBHelper.pdb
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\Npgsql.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\Mono.Security.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\Npgsql.pdb
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\Npgsql.xml
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\de\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\es\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\fi\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\fr\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\ja\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\zh-CN\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\obj\Debug\DBHelper.csprojResolveAssemblyReference.cache
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\obj\Debug\DBHelper.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\obj\Debug\DBHelper.pdb

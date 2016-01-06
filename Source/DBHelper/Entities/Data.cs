@@ -23,7 +23,39 @@ namespace DBHelper.Entities
         public string address2 { get; set; }
         public string address3 { get; set; }
         public string address4 { get; set; }
-        public string address { get; set; }
+        private string _address = "";
+        public string address
+        {
+            get
+            {
+                if (_address == null || _address == "")
+                {
+                    string res = "";
+                    if (address1 != null)
+                    {
+                        res += address1 + ", ";
+                    }
+                    if (address2 != null)
+                    {
+                        res += address2 + ", ";
+                    }
+                    if (address3 != null)
+                    {
+                        res += address3 + ", ";
+                    }
+                    if (address4 != null)
+                    {
+                        res += address4;
+                    }
+                    _address = res;
+                }
+                return _address;
+            }
+            set
+            {
+                _address = value;
+            }
+        }
         public string adrress_correct
         {
             get

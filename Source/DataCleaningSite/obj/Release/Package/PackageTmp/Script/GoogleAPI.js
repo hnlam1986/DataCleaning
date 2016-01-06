@@ -3,6 +3,7 @@
     this.HasCompleted = false;
     this.OneTimesCompleted = false;
     this.CurrentAddress = 0;
+    this.CurrentItem = null;
     this.CurrentId = 0;
     this.SuggestList = new Array();
     this.Initialize();
@@ -13,6 +14,7 @@ GoogleAPI.prototype = {
         googleAPI.HasCompleted = false;
         googleAPI.CurrentAddress = 0;
         googleAPI.CurrentId = 0;
+        googleAPI.CurrentItem = null;
         googleAPI.OneTimesCompleted = false;
         googleAPI.SuggestList = new Array();
 
@@ -80,9 +82,10 @@ GoogleAPI.prototype = {
                 if (index < googleAPI.OriginalAddress.length) {
                     //if (index < 2) {
                     $("#Label1").html("Keyword search: " + (index + 1) + "/" + googleAPI.OriginalAddress.length);
-                    googleAPI.CurrentAddress = googleAPI.OriginalAddress[index].cleaning_address;
+                    googleAPI.CurrentItem = googleAPI.OriginalAddress[index];
+                    googleAPI.CurrentAddress = googleAPI.OriginalAddress[index].complete_adrress_correct;
                     googleAPI.CurrentId = googleAPI.OriginalAddress[index].data_id;
-                    var address = googleAPI.OriginalAddress[index].cleaning_address;
+                    var address = googleAPI.OriginalAddress[index].complete_adrress_correct;
                     res += googleAPI.GetSuggestAddress(address, 0, "");
                     index++;
                 } else {
@@ -103,7 +106,7 @@ GoogleAPI.prototype = {
             googleAPI.HasCompleted = true;
             return;
         }
-        var searchValue = address + ", Việt Nam";
+        var searchValue = address ;
         $("#keyword").html(searchValue);
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': searchValue }, function (results, status) {
@@ -112,7 +115,15 @@ GoogleAPI.prototype = {
                 if (loop + results.length >= 5 || !address.contains(',')) {
                     loop += results.length;
                     $("#res").html(res);
-                    googleAPI.SuggestList.push({ "data_id": googleAPI.CurrentId, "google_suggest": res });
+                    googleAPI.SuggestList.push({ 
+                        "data_id": googleAPI.CurrentId, 
+                        "google_suggest": res, 
+                        "cleaning_address1": googleAPI.CurrentItem.adrress_correct1,
+                        "cleaning_address2": googleAPI.CurrentItem.adrress_correct2,
+                        "cleaning_address3": googleAPI.CurrentItem.adrress_correct3,
+                        "cleaning_address4": googleAPI.CurrentItem.adrress_correct4,
+                        "full_cleaning_address": googleAPI.CurrentItem.adrress_correct
+                        });
                     googleAPI.HasCompleted = true;
                     return res;
                 } else {

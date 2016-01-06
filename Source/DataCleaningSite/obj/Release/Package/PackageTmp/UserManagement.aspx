@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/DataCleaning.Master" AutoEventWireup="true" CodeBehind="UserManagement.aspx.cs" Inherits="DataCleaningSite.UserManagement" %>
 
-<%@ Register Src="~/Control/SubMenu.ascx" TagPrefix="uc1" TagName="SubMenu" %>
+<%@ Register Src="~/Controls/SubMenu.ascx" TagPrefix="uc1" TagName="SubMenu" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" type="text/css" href="/CSS/easyui.css" />

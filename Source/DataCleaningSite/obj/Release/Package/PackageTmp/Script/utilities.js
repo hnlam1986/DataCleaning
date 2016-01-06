@@ -1,8 +1,8 @@
-﻿function HtmlEncode  (value) {
+﻿function HtmlEncode(value) {
     return $('<div/>').text(value).html();
 };
 
-function HtmlDecode (value) {
+function HtmlDecode(value) {
     return $('<div/>').html(value).text();
 }
 
@@ -25,14 +25,14 @@ function GetSelectionText(element_id) {
         var endPos = textComponent.selectionEnd;
         selectedText = textComponent.value.substring(startPos, endPos)
     }
-     return selectedText;
+    return selectedText;
 }
 
-function AddIndicatorToDiv  (divId) {
+function AddIndicatorToDiv(divId) {
     $(divId).block({ message: "<img src='/Images/loading.gif' id='test'/>" });
 }
 
-function RemoveIndicatorToDiv  (divId) {
+function RemoveIndicatorToDiv(divId) {
     $(divId).unblock({ message: "<img src='/Images/loading.gif' id='test'/>" });
 }
 
@@ -53,4 +53,55 @@ function GetCurrentTime() {
     }
     var dateTime = hour + ':' + minute + ':' + second + "." + mili;
     return dateTime;
+}
+
+function ShowBlindMessage(msg, control, color) {
+    $(document).ready(function () {
+        $(control).html("");
+        $(control).append("<div id='idMessage' style='color:" + color + "'>" + msg + "</div>");
+        setTimeout(function () {
+            $('#idMessage').fadeOut();
+        }, 3000);
+    });
+
+}
+
+function SaveQcPercentMessage(isSucceess) {
+    if (isSucceess) {
+        ShowBlindMessage('Save QC percent success!', '#qcMessageContent', 'green');
+    } else {
+        ShowBlindMessage('Save QC percent unsuccess!', '#qcMessageContent', 'red');
+    }
+}
+
+function StartQcMessage(isSucceess) {
+    if (isSucceess) {
+        ShowBlindMessage('Start QC percent success!', '#qcMessageContent', 'green');
+    } else {
+        ShowBlindMessage('Start QC percent unsuccess or don\' have more card for QC!', '#qcMessageContent', 'red');
+    }
+}
+
+function ReturnCardMessage(isSucceess) {
+    if (isSucceess) {
+        ShowBlindMessage('Return card success!', '#ReturnMessageContent', 'green');
+    } else {
+        ShowBlindMessage('Return card unsuccess or don\'t have more card to return!', '#ReturnMessageContent', 'red');
+    }
+}
+
+function ResetCardMessage(isSucceess) {
+    if (isSucceess) {
+        ShowBlindMessage('Reset card success!', '#ResetMessageContent', 'green');
+    } else {
+        ShowBlindMessage('Reset card unsuccess or don\'t have more card to reset!', '#ResetMessageContent', 'red');
+    }
+}
+
+function Comparation(string1, string2) {
+    var dmp = new diff_match_patch();
+    var d = dmp.diff_main(string1, string2);
+    dmp.diff_cleanupSemantic(d);
+    var ds = dmp.diff_prettyHtml(d);
+    $("#comparation_output").html(ds);
 }

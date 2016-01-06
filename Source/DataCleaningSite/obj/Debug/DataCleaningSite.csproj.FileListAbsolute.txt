@@ -15,3 +15,20 @@ D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\fi\Npgsql.resource
 D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\fr\Npgsql.resources.dll
 D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\ja\Npgsql.resources.dll
 D:\Lam Huynh\Data Cleaning\GoogleAddress\DataCleaningSite\bin\zh-CN\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\DataCleaningSite.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\DataCleaningSite.pdb
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\DBHelper.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\Npgsql.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\Mono.Security.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\DBHelper.pdb
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\Npgsql.pdb
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\Npgsql.xml
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\de\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\es\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\fi\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\fr\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\ja\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\bin\zh-CN\Npgsql.resources.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\obj\Debug\DataCleaningSite.csprojResolveAssemblyReference.cache
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\obj\Debug\DataCleaningSite.dll
+D:\Lam Huynh\GitHub\DataCleaning\Source\DataCleaningSite\obj\Debug\DataCleaningSite.pdb

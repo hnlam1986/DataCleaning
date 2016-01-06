@@ -9,8 +9,8 @@
 };
 ProcessForm.prototype = {
     Initialize: function (currentStep) {
-        var processForm = this;
-        processForm.ItemTemplate = "<div class='card-item {2}' id='card_id_{0}' onclick='processForm.SelectCard(this);' data-card-id='{0}'>{1}</div>";
+        var processForm = this;//onclick='processForm.SelectCard(this);'
+        processForm.ItemTemplate = "<div class='card-item {2}' id='card_id_{0}'  data-card-id='{0}'>{1}</div>";
         var screenHeigth = $(window).height() - $("#mainNavigator").height();
         $("#MainContainBody").height(screenHeigth);
         processForm.CurrentCard = null;
@@ -21,11 +21,12 @@ ProcessForm.prototype = {
         }
         //----prevent save when press ctrl+s
         $(document).keypress(function (e) {
-            if (e.which == 115) {
+            if (e.ctrlKey && e.key=="s") {
                 e.preventDefault();
                 $('#btnSave').click();
                 $('#btnSave').focus();
             }
+            $("#btnSave").on("focus", function () { $("#txtAddress1").focus(); });
         });
     },
     BindHighlightTextBox: function () {
@@ -35,12 +36,92 @@ ProcessForm.prototype = {
         $("#txtAddress3").focus(function () { processForm.HighlightFocus($("#txtAddress3")) });
         $("#txtAddress4").focus(function () { processForm.HighlightFocus($("#txtAddress4")) });
 
-        $("#txtAddress1").select(function () { processForm.HighlightSelectedText("txtAddress1") });
-        $("#txtAddress2").select(function () { processForm.HighlightSelectedText("txtAddress2") });
-        $("#txtAddress3").select(function () { processForm.HighlightSelectedText("txtAddress3") });
-        $("#txtAddress4").select(function () { processForm.HighlightSelectedText("txtAddress4") });
+        $("#txtAddress1").select(function () { processForm.HighlightSelectedText("#txtAddress1") });
+        $("#txtAddress2").select(function () { processForm.HighlightSelectedText("#txtAddress2") });
+        $("#txtAddress3").select(function () { processForm.HighlightSelectedText("#txtAddress3") });
+        $("#txtAddress4").select(function () { processForm.HighlightSelectedText("#txtAddress4") });
+        if (processForm.CurrentStep == "qc") {
+            $("#txtAddress1").blur(function () {
+                var newText = $("#txtAddress1").val();
+                if (processForm.CurrentCard && ((processForm.CurrentCard.verify_address1 != newText && processForm.CurrentCard.verify_address1 != null && newText.trim() != "") || (processForm.CurrentCard.verify_address1 == null && newText.trim() != ""))) {
+                    $("#txtAddress1").addClass("highlight-background");
+                } else {
+                    $("#txtAddress1").removeClass("highlight-background");
+                }
+            });
+            $("#txtAddress2").blur(function () {
+                var newText = $("#txtAddress2").val();
+                if (processForm.CurrentCard && ((processForm.CurrentCard.verify_address2 != newText && processForm.CurrentCard.verify_address2 != null && newText.trim() != "") || (processForm.CurrentCard.verify_address2 == null && newText.trim() != ""))) {
+                    $("#txtAddress2").addClass("highlight-background");
+                } else {
+                    $("#txtAddress2").removeClass("highlight-background");
+                }
+            });
+            $("#txtAddress3").blur(function () {
+                var newText = $("#txtAddress3").val();
+                if (processForm.CurrentCard && ((processForm.CurrentCard.verify_address3 != newText && processForm.CurrentCard.verify_address3 != null && newText.trim() != "") || (processForm.CurrentCard.verify_address3 == null && newText.trim() != ""))) {
+                    $("#txtAddress3").addClass("highlight-background");
+                } else {
+                    $("#txtAddress3").removeClass("highlight-background");
+                }
+            });
+            $("#txtAddress4").blur(function () {
+                var newText = $("#txtAddress4").val();
+                if (processForm.CurrentCard && ((processForm.CurrentCard.verify_address4 != newText && processForm.CurrentCard.verify_address4 != null && newText.trim() != "") || (processForm.CurrentCard.verify_address4 == null && newText.trim() != ""))) {
+                    $("#txtAddress4").addClass("highlight-background");
+                } else {
+                    $("#txtAddress4").removeClass("highlight-background");
+                }
+            });
+        }else if (processForm.CurrentStep == "approve") {
+            $("#txtAddress1").focus(function () {
+                if (processForm.CurrentCard) {
+                    processForm.HighlightFocus($("#txtApprove1"));
+                    $("#txtApprove1").addClass("highlight-background");
+                    $("#txtAddress1").addClass("highlight-background");
+                }
+            });
+            $("#txtAddress1").blur(function () {
+                $("#txtApprove1").removeClass("highlight-background");
+                $("#txtAddress1").removeClass("highlight-background");
+            });
 
-        if (processForm.CurrentStep == "approve" ) {
+            $("#txtAddress2").focus(function () {
+                if (processForm.CurrentCard) {
+                    processForm.HighlightFocus($("#txtApprove2"));
+                    $("#txtApprove2").addClass("highlight-background");
+                    $("#txtAddress2").addClass("highlight-background");
+                }
+            });
+            $("#txtAddress2").blur(function () {
+                $("#txtApprove2").removeClass("highlight-background");
+                $("#txtAddress2").removeClass("highlight-background");
+            });
+
+            $("#txtAddress3").focus(function () {
+                if (processForm.CurrentCard) {
+                    processForm.HighlightFocus($("#txtApprove3"));
+                    $("#txtApprove3").addClass("highlight-background");
+                    $("#txtAddress3").addClass("highlight-background");
+                }
+            });
+            $("#txtAddress3").blur(function () {
+                $("#txtApprove3").removeClass("highlight-background");
+                $("#txtAddress3").removeClass("highlight-background");
+            });
+
+            $("#txtAddress4").focus(function () {
+                if (processForm.CurrentCard) {
+                    processForm.HighlightFocus($("#txtApprove4"));
+                    $("#txtApprove4").addClass("highlight-background");
+                    $("#txtAddress4").addClass("highlight-background");
+                }
+            });
+            $("#txtAddress4").blur(function () {
+                $("#txtApprove4").removeClass("highlight-background");
+                $("#txtAddress4").removeClass("highlight-background");
+            });
+            //---------------------------------------------
             $("#txtApprove1").focus(function () {
                 if (processForm.CurrentCard) {
                     processForm.HighlightFocus($("#txtApprove1"));
@@ -119,17 +200,20 @@ ProcessForm.prototype = {
                     item_list += String.format(processForm.ItemTemplate, id, address, odd);
                 });
                 $(divId).append($(item_list));
+                processForm.SelectTopCard();
             }
             RemoveIndicatorToDiv(divId);
             if ($("#btnSave").val() == "Get More Card") {
                 $("#btnSave").val("Next Card");
-                $("#btnSave").removeAttr("onclick");
+                $("#btnSave").removeAttr("onclick").attr("onclick", "processForm.NextCard();");
 
             }
             if (result == "null") {
                 $("#btnSave").val("End of card");
             }
+            
         });
+        $("#txtAddress2").focus();
     },
     GetCardInfo: function (card_id) {
         var processForm = this;
@@ -222,9 +306,17 @@ ProcessForm.prototype = {
             $("#lblFullApprove").text(fullApproveAddress);
         }
         $("#lblFullAddressValue").text(full_address);
+        $("#lblOriginalFullAddress").text(card_info.address);
+        $("#lblQcOriginalFullAddress").text(card_info.address);
+        
+        
+        $(".lblCity").text(card_info.city_lms + ", " + card_info.state_desc);
         $("#googleSuggestResult").html(HtmlDecode(HtmlDecode(card_info.google_suggest)));
         $("#btnSave").removeAttr("disabled");
         $("#btnSave").attr("onclick", "processForm.NextCard();");
+        if (processForm.CurrentStep == "approve") {
+            Comparation(full_address, fullApproveAddress);
+        }
     },
     CleanDataFill: function () {
         $("#txtAddress1").val("");
@@ -232,6 +324,11 @@ ProcessForm.prototype = {
         $("#txtAddress3").val("");
         $("#txtAddress4").val("");
         $("#lblFullAddressValue").text("");
+        $("#lblOriginalFullAddress").text("");
+        $("#lblQcOriginalFullAddress").text("");
+        $("#lblFullApprove").text("");
+        $("#comparation_output").html("");
+        $(".lblCity").text("");
         $("#googleSuggestResult").html("");
         $("#btnSave").removeAttr("onclick");
         if (processForm.CurrentStep == "approve") {
@@ -250,10 +347,11 @@ ProcessForm.prototype = {
         }
     },
     SelectTopCard: function () {
+        var processForm = this;;
         var all_item = $(".card-item");
         if (all_item.length > 0) {
             var top = all_item[0];
-            $(top).click();
+            processForm.SelectCard(top);
         }
     },
     RederOddItem: function () {
@@ -275,7 +373,7 @@ ProcessForm.prototype = {
         processForm.CurrentCard.starttime = GetCurrentTime();
         processForm.FillDataToTextBox(card);
         $("#ifGoogleEmbed").attr("src", "http://www.google.com.vn/custom?q=" + encodeURI(processForm.CurrentCard.full_cleaning_address));
-        $(".highlight-background").removeClass(".highlight-background");
+        $(".highlight-background").removeClass("highlight-background");
     },
     OpenGoogleSearch: function () {
         var processForm = this;
@@ -313,6 +411,7 @@ ProcessForm.prototype = {
         } else if (processForm.CurrentStep == 'approve') {
             processForm.SaveApproveCard();
         }
+        $("#txtAddress2").focus();
     },
     SaveVerifyCard: function () {
         var processForm = this;

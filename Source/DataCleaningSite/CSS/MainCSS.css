@@ -209,7 +209,7 @@
     background-color: #c1d1e2;
 }
 
-.card-item:hover, .card-item.select-card
+ .card-item.select-card
 {
     background-color: #3185e3;
     cursor: pointer;
@@ -227,6 +227,11 @@
 }
 
 #fullAddressContain
+{
+    margin-top: 13px;
+    margin-left: 10px;
+}
+#fullOriginalAddressContain
 {
     margin-top: 5px;
     margin-left: 10px;
@@ -318,6 +323,10 @@
     width:100%;
     padding-right:10px;
 }
+.lblCity
+{
+    margin-left:100px;
+}
 /*---------------------------------------------------------*/
 .edit-function-column
 {
@@ -349,6 +358,10 @@
 {
     color:red;
 }
+.success-message
+{
+    color: green;
+}
 #divReturnCard, #divResetAllData, #divExportData
 {
     margin-top:10px;
@@ -357,4 +370,27 @@
 {
     border: 1px solid #95b8e7;
     padding:10px;
+}
+.bold-text
+{
+    font-weight:bold;
+    font-size:13px;
+}
+.margin-left-10px
+{
+    margin-left: 10px;
+}
+.margin-top-13px
+{
+    margin-top: 13px;
+}
+#comparation_output
+{
+    margin-left:5px;
+    font-size: 15px;
+}
+/*---------------------------------------*/
+.change-password .inner
+{
+    width:300px;
 }
