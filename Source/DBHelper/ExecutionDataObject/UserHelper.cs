@@ -67,5 +67,13 @@ namespace DBHelper.ExecutionDataObject
             res = cmd.ExecuteScalar(DBConstant.UpdateUser, new NpgsqlParameter[] { param_user_id, param_password, param_role, param_display_name, param_status });
             return res;
         }
+        public List<string> GetUsersByStep(string step)
+        {
+            List<string> result = null;
+            NpgsqlParameter paramstep = new NpgsqlParameter("@step", NpgsqlTypes.NpgsqlDbType.Text);
+            paramstep.Value = step;
+            List<string> dt = cmd.ExecuteDataAdapter(DBConstant.GetUserByStep, new NpgsqlParameter[] { paramstep });
+            return dt;
+        }
     }
 }

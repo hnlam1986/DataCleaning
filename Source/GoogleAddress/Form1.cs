@@ -22,9 +22,7 @@ namespace GoogleAddress
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            DataHelper dataHelper = new DataHelper();
-            List<Data> lstData = dataHelper.GetAllData();
-            lblCompleted.Text = "0/" + lstData.Count;
+           
         }
 
 

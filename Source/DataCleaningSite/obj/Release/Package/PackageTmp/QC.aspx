@@ -5,6 +5,7 @@
     <script type="text/javascript" src="/Script/jquery.blockUI.js"></script>
     <script type="text/javascript" src="/Script/jquery.highlight.js"></script>
     <script type="text/javascript" src="/Script/jquery.caret.1.02.min.js"></script>
+    <script type="text/javascript" src="/Script/shortcut.js"></script>
     <script type="text/javascript" src="/Script/ProcessForm.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -43,7 +44,9 @@
                             <td>
                                 <input type="text" id="txtAddress4" class="login-textbox" tabindex="4"/></td>
                             <td>
-                                <input type="button" value="Next Card" disabled="disabled" id="btnSave"/></td>
+                                <input type="button" value="Next Card" disabled="disabled" id="btnSave"/>
+                                 <input type="button" value="Previous Card"  id="btnPrevious" tabindex="6" onclick="processForm.GetPreviousCard();" disabled="disabled"/>
+                            </td>
                         </tr>
                     </table>
                     <label id="lblMessage"> </label>

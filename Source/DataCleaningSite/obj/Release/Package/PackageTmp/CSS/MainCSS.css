@@ -362,11 +362,11 @@
 {
     color: green;
 }
-#divReturnCard, #divResetAllData, #divExportData
+#divReturnCard, #divResetAllData, #divExportData, #divQCSetting
 {
     margin-top:10px;
 }
-#divReturnCard, #divResetAllData, #divQCSetting, #divExportData
+#divReturnCard, #divResetAllData, #divQCSetting, #divExportData, #divGoogleSuggest
 {
     border: 1px solid #95b8e7;
     padding:10px;

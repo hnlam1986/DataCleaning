@@ -11,7 +11,12 @@ namespace DataCleaningSite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            string time = ""; 
+            if (Session["GoogleSession"] != null)
+            {
+                time = Session["GoogleSession"].ToString();
+            }
+            Session["GoogleSession"] = DateTime.Now.ToShortDateString() + DateTime.Now.ToShortTimeString();
         }
     }
 }

@@ -8,6 +8,18 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <uc1:SubMenu runat="server" ID="SubMenu" UserManagementUrl="~/UserManagement.aspx" />
     <div id="divSettingContent">
+        <div id="divGoogleSuggest">
+            <table>
+                <tr>
+                    <td>Open Google Suggestion:</td>
+                    <td>
+                        <input id="btnGoogle" value="Open new window" type="button"  onclick="openSessionGoogleSuggest();"/>
+                        
+                    </td>
+                </tr>
+            </table>
+            <asp:GridView ID="GridView2" runat="server"></asp:GridView>
+        </div>
         <div id="divQCSetting">
             <table>
                 <tr>
@@ -32,11 +44,13 @@
                 <tr>
                     <td>Return card for Step:</td>
                     <td>
-                        <asp:DropDownList ID="ddlStep" runat="server">
+                        <asp:DropDownList ID="ddlStep" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlStep_SelectedIndexChanged" Width="100px">
+                            <asp:ListItem></asp:ListItem>
                             <asp:ListItem Value="verify">Verify</asp:ListItem>
                             <asp:ListItem Value="qc">QC</asp:ListItem>
                             <asp:ListItem Value="approve">Approve</asp:ListItem>
                         </asp:DropDownList>
+                        <asp:DropDownList ID="ddlUser" runat="server" Width="100px"></asp:DropDownList>
                     </td>
                     <td>
                         <asp:Button ID="btnReturn" runat="server" Text="Return Card" OnClick="btnReturn_Click" />
@@ -74,5 +88,6 @@
             </table>
             <asp:GridView ID="GridView1" runat="server"></asp:GridView>
         </div>
+        
     </div>
 </asp:Content>

@@ -7,6 +7,7 @@
     <title>Data Cleaning</title>
     <link rel="stylesheet" type="text/css" href="/CSS/MainCSS.css" />
     <script type="text/javascript" src="/Script/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/Script/jquery-migrate-1.0.0.js"></script>
     <script type="text/javascript" src="/Script/utilities.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>

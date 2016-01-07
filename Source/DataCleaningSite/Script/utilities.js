@@ -9,6 +9,26 @@ function HtmlDecode(value) {
 function openWindowPopup(windowName, url) {
     window.open(url, windowName);
 }
+function getTimeStamp() {
+    var now = new Date();
+    var full_date = ((now.getMonth() + 1) + '/' + (now.getDate()) + '/' + now.getFullYear() + " " + now.getHours() + ':'
+                  + ((now.getMinutes() < 10) ? ("0" + now.getMinutes()) : (now.getMinutes())) + ':' + ((now.getSeconds() < 10) ? ("0" + now
+                  .getSeconds()) : (now.getSeconds())));
+    return new Date(full_date).getTime();
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function openSessionGoogleSuggest() {
+    var session = getTimeStamp();
+    var newUrl = "/GoogleSuggestAddress.aspx?session=" + session;
+    window.open(newUrl, session, "height=400,width=400");
+}
 
 function GetSelectionText(element_id) {
     var textComponent = $(element_id)[0];
@@ -104,4 +124,33 @@ function Comparation(string1, string2) {
     dmp.diff_cleanupSemantic(d);
     var ds = dmp.diff_prettyHtml(d);
     $("#comparation_output").html(ds);
+}
+
+function doGetCaretPosition(oField) {
+
+    // Initialize
+    var iCaretPos = 0;
+
+    // IE Support
+    if (document.selection) {
+
+        // Set focus on the element
+        oField.focus();
+
+        // To get cursor position, get empty selection range
+        var oSel = document.selection.createRange();
+
+        // Move selection start to 0 position
+        oSel.moveStart('character', -oField.value.length);
+
+        // The caret position is selection length
+        iCaretPos = oSel.text.length;
+    }
+
+        // Firefox support
+    else if (oField.selectionStart || oField.selectionStart == '0')
+        iCaretPos = oField.selectionStart;
+
+    // Return results
+    return iCaretPos;
 }

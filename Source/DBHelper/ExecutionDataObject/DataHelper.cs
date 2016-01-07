@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DBHelper.Entities;
+using Npgsql;
 
 namespace DBHelper.ExecutionDataObject
 {
@@ -16,9 +17,11 @@ namespace DBHelper.ExecutionDataObject
             cmd = new DBExecution();
         }
 
-        public List<Data> GetAllData()
+        public List<Data> GetAllData(string session)
         {
-            List<Data> dt = cmd.ExecuteDataAdapter<Data>(DBConstant.GetAllData,null);
+            NpgsqlParameter param = new NpgsqlParameter("@sessionName", NpgsqlTypes.NpgsqlDbType.Text);
+            param.Value = session;
+            List<Data> dt = cmd.ExecuteDataAdapter<Data>(DBConstant.GetAllData, new NpgsqlParameter[] { param });
             return dt;
         }
 

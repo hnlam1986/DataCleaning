@@ -27,6 +27,7 @@ namespace DBHelper
         public const string ReturnCard = "return_card_by_step";
         public const string ResetAllData = "reset_all_data";
         public const string GetExportData = "get_export_data";
+        public const string GetUserByStep = "get_user_by_step";
         
         #endregion
         public static string Schema

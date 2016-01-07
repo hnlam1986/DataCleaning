@@ -134,11 +134,13 @@ namespace DBHelper.ExecutionDataObject
             return res;
         }
 
-        public int ReturnCard(string step)
+        public int ReturnCard(string step, string username)
         {
             NpgsqlParameter param_step = new NpgsqlParameter("@step", NpgsqlTypes.NpgsqlDbType.Text);
             param_step.Value = step;
-            int res = cmd.ExecuteScalar(DBConstant.ReturnCard, new NpgsqlParameter[] { param_step });
+            NpgsqlParameter param_username = new NpgsqlParameter("@username", NpgsqlTypes.NpgsqlDbType.Text);
+            param_username.Value = username;
+            int res = cmd.ExecuteScalar(DBConstant.ReturnCard, new NpgsqlParameter[] { param_step, param_username });
             return res;
         }
 

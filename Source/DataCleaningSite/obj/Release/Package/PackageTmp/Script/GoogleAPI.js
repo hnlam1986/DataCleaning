@@ -30,6 +30,7 @@ GoogleAPI.prototype = {
         }
     },
     GetAddressData: function () {
+        var sessionName = getParameterByName("session");
         var googleAPI = this;
         googleAPI.ChangeButtonText();
         googleAPI.OneTimesCompleted = true;
@@ -39,7 +40,7 @@ GoogleAPI.prototype = {
                     googleAPI.OneTimesCompleted = false;
                     $.ajax({
                         url: "ajax.aspx",
-                        data: { "action": "get_address_data" }
+                        data: { "action": "get_address_data", "data": sessionName }
                     }).success(function (result) {
                         if (result != undefined) {
                             googleAPI.OriginalAddress = jQuery.parseJSON(result);
@@ -94,7 +95,7 @@ GoogleAPI.prototype = {
                     googleAPI.OneTimesCompleted = true;
                 }
             }
-        }, 1000);
+        }, 500);
     },
 
     GetSuggestAddress: function (address, loop, before) {
@@ -102,17 +103,27 @@ GoogleAPI.prototype = {
             before = "";
         }
         var googleAPI = this;
-        if (loop > 5) {
+        if (loop > 5 || address == "" || address.replace(/ /g, '').toLowerCase() == (googleAPI.CurrentItem.city_lms + ", " + googleAPI.CurrentItem.state_desc + ", " + googleAPI.CurrentItem.country_lms).replace(/ /g, '').toLowerCase()) {
+            $("#res").html(before);
+            googleAPI.SuggestList.push({
+                "data_id": googleAPI.CurrentId,
+                "google_suggest": before,
+                "cleaning_address1": googleAPI.CurrentItem.adrress_correct1,
+                "cleaning_address2": googleAPI.CurrentItem.adrress_correct2,
+                "cleaning_address3": googleAPI.CurrentItem.adrress_correct3,
+                "cleaning_address4": googleAPI.CurrentItem.adrress_correct4,
+                "full_cleaning_address": googleAPI.CurrentItem.adrress_correct
+            });
             googleAPI.HasCompleted = true;
-            return;
+            return res;
         }
         var searchValue = address ;
         $("#keyword").html(searchValue);
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': searchValue }, function (results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
+            if (status === google.maps.GeocoderStatus.OK || status === google.maps.GeocoderStatus.ZERO_RESULTS) {
                 var res = before + googleAPI.BuildAdrressList(results);
-                if (loop + results.length >= 5 || !address.contains(',')) {
+                if (loop + results.length >= 5 || !address.indexOf(',')>0) {
                     loop += results.length;
                     $("#res").html(res);
                     googleAPI.SuggestList.push({ 
@@ -132,14 +143,14 @@ GoogleAPI.prototype = {
                     setTimeout(function () {
                         googleAPI.GetSuggestAddress(newAddress, results.length, res);
                         //return res;
-                    }, 500);
+                    }, 200);
                 }
             } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
                 var res = before;
                 setTimeout(function () {
                     googleAPI.GetSuggestAddress(address, loop, res);
                     //return res;
-                }, 1000);
+                }, 500);
             }
         });
     },

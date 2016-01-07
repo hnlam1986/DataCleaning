@@ -6,6 +6,7 @@
     <script type="text/javascript" src="/Script/jquery.blockUI.js"></script>
     <script type="text/javascript" src="/Script/jquery.highlight.js"></script>
     <script type="text/javascript" src="/Script/jquery.caret.1.02.min.js"></script>
+    <script type="text/javascript" src="/Script/shortcut.js"></script>
     <script type="text/javascript" src="/Script/ProcessForm.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -28,23 +29,25 @@
                     </div>
                     <table cellspacing="10">
                         <tr>
-                            <td>Address 1:</td>
+                            <td>ADDRESS1 [Số]:</td>
                             <td>
                                 <input type="text" id="txtAddress1" class="login-textbox" tabindex="1"/></td>
-                            <td>Address 3:</td>
+                            <td>ADDRESS3 [Phường/Xã/Thị trấn]:</td>
                             <td>
                                 <input type="text" id="txtAddress3" class="login-textbox" tabindex="3"/></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>Address 2:</td>
+                            <td>ADDRESS2 [Tên đường/khóm/Thôn/Ấp/Tổ]:</td>
                             <td>
                                 <input type="text" id="txtAddress2" class="login-textbox" tabindex="2"/></td>
-                            <td>Address 4:</td>
+                            <td>ADDRESS4 [Quận/Huyện/Thị xã]</td>
                             <td>
                                 <input type="text" id="txtAddress4" class="login-textbox" tabindex="4"/></td>
                             <td>
-                                <input type="button" value="Next Card" disabled="disabled" id="btnSave" tabindex="5"/></td>
+                                <input type="button" value="Next Card" disabled="disabled" id="btnSave" tabindex="5"/>
+                                <input type="button" value="Previous Card"  id="btnPrevious" tabindex="6" onclick="processForm.GetPreviousCard();" disabled="disabled"/>
+                            </td>
                         </tr>
                     </table>
                     <label id="lblMessage"> </label>

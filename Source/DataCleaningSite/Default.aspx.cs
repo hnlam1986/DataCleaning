@@ -40,7 +40,26 @@ namespace DataCleaningSite
                 Role role = new Role(res.role);
                 login.UserRole = role;
                 Session.Add(DataCleaningConstant.LoginInfoSession, login);
-                Response.Redirect("/home.aspx");
+                if (role.HasVerifyRole && !role.HasSettingRole && !role.HasQCRole && !role.HasApproveRole)
+                {
+                    Response.Redirect("/verify.aspx");
+                }
+                else if (!role.HasVerifyRole && !role.HasSettingRole && role.HasQCRole && !role.HasApproveRole)
+                {
+                    Response.Redirect("/qc.aspx");
+                }
+                else if (!role.HasVerifyRole && !role.HasSettingRole && !role.HasQCRole && role.HasApproveRole)
+                {
+                    Response.Redirect("/approve.aspx");
+                }
+                else if (!role.HasVerifyRole && role.HasSettingRole && !role.HasQCRole && !role.HasApproveRole)
+                {
+                    Response.Redirect("/setting.aspx");
+                }
+                else
+                {
+                    Response.Redirect("/home.aspx");
+                }
             }
             else
             {

@@ -17,10 +17,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/06/2016 01:52:10</publishTime>
     </File>
     <File Include="bin/DataCleaningSite.dll">
-      <publishTime>01/06/2016 09:23:09</publishTime>
+      <publishTime>01/07/2016 04:42:39</publishTime>
     </File>
     <File Include="bin/DBHelper.dll">
-      <publishTime>01/06/2016 09:23:08</publishTime>
+      <publishTime>01/07/2016 04:42:39</publishTime>
     </File>
     <File Include="bin/de/Npgsql.resources.dll">
       <publishTime>11/21/2014 06:43:34</publishTime>
@@ -122,10 +122,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/29/2015 17:00:37</publishTime>
     </File>
     <File Include="CSS/MainCSS.css">
-      <publishTime>01/06/2016 00:48:07</publishTime>
+      <publishTime>01/06/2016 23:17:43</publishTime>
     </File>
     <File Include="DataCleaning.Master">
-      <publishTime>01/04/2016 10:09:45</publishTime>
+      <publishTime>01/07/2016 03:24:47</publishTime>
     </File>
     <File Include="Default.aspx">
       <publishTime>01/04/2016 10:17:46</publishTime>
@@ -182,7 +182,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/29/2015 11:12:48</publishTime>
     </File>
     <File Include="QC.aspx">
-      <publishTime>01/06/2016 01:50:34</publishTime>
+      <publishTime>01/07/2016 04:37:31</publishTime>
     </File>
     <File Include="Script/datagrid-filter.js">
       <publishTime>01/02/2016 22:57:33</publishTime>
@@ -191,10 +191,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/06/2016 00:52:27</publishTime>
     </File>
     <File Include="Script/GoogleAPI.js">
-      <publishTime>01/04/2016 20:54:59</publishTime>
+      <publishTime>01/06/2016 22:40:37</publishTime>
     </File>
     <File Include="Script/jquery-1.11.3.min.js">
       <publishTime>12/29/2015 22:37:01</publishTime>
+    </File>
+    <File Include="Script/jquery-migrate-1.0.0.js">
+      <publishTime>01/07/2016 03:23:55</publishTime>
     </File>
     <File Include="Script/jquery.blockUI.js">
       <publishTime>12/29/2015 17:49:19</publishTime>
@@ -221,7 +224,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/02/2016 16:58:44</publishTime>
     </File>
     <File Include="Script/ProcessForm.js">
-      <publishTime>01/06/2016 01:47:44</publishTime>
+      <publishTime>01/07/2016 04:39:35</publishTime>
     </File>
     <File Include="Script/shortcut.js">
       <publishTime>12/31/2015 15:44:19</publishTime>
@@ -230,19 +233,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/03/2016 14:13:23</publishTime>
     </File>
     <File Include="Script/utilities.js">
-      <publishTime>01/06/2016 00:33:17</publishTime>
+      <publishTime>01/07/2016 03:42:16</publishTime>
     </File>
     <File Include="Setting.aspx">
-      <publishTime>01/04/2016 15:48:24</publishTime>
+      <publishTime>01/07/2016 00:08:44</publishTime>
     </File>
     <File Include="UserManagement.aspx">
       <publishTime>01/04/2016 15:48:11</publishTime>
     </File>
     <File Include="Verify.aspx">
-      <publishTime>01/05/2016 23:47:23</publishTime>
+      <publishTime>01/07/2016 04:34:11</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/06/2016 09:27:18</publishTime>
+      <publishTime>01/07/2016 04:42:39</publishTime>
     </File>
   </ItemGroup>
 </Project>

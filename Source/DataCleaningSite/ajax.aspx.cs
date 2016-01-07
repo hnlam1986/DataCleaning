@@ -63,8 +63,9 @@ namespace DataCleaningSite
         }
         private void GetAddressData()
         {
+            string data = Request.QueryString["data"];
             DataHelper dataHelper = new DataHelper();
-            List<Data> lstData = dataHelper.GetAllData();
+            List<Data> lstData = dataHelper.GetAllData(data);
             var jsonSerialiser = new JavaScriptSerializer();
             var json = jsonSerialiser.Serialize(lstData);
             Response.Write(json);
@@ -170,13 +171,13 @@ namespace DataCleaningSite
             Response.End();
         }
 
-        private void ReturnCard()
-        {
-            string data = Request.Form["data"];
-            DataProcessHelper dataProcessHelper = new DataProcessHelper();
-            int res = dataProcessHelper.ReturnCard(data);
-            Response.Write(res.ToString());
-            Response.End();
-        }
+        //private void ReturnCard()
+        //{
+        //    string data = Request.Form["data"];
+        //    DataProcessHelper dataProcessHelper = new DataProcessHelper();
+        //    int res = dataProcessHelper.ReturnCard(data);
+        //    Response.Write(res.ToString());
+        //    Response.End();
+        //}
     }
 }

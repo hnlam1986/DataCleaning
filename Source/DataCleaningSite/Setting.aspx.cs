@@ -59,7 +59,12 @@ namespace DataCleaningSite
         {
             DataProcessHelper dataProcessHelper = new DataProcessHelper();
             string data = ddlStep.SelectedValue;
-            int res = dataProcessHelper.ReturnCard(data);
+            int res = dataProcessHelper.ReturnCard(data, ddlUser.SelectedValue.ToString());
+            if (res > 0)
+            {
+                int index = ddlUser.SelectedIndex;
+                ddlUser.Items.RemoveAt(index);
+            }
             ClientScript.RegisterClientScriptBlock(this.GetType(), "ShowResultQCPercent", "<script>ReturnCardMessage(" + (res > 0).ToString().ToLower() + ");</script>");
         }
 
@@ -104,6 +109,16 @@ namespace DataCleaningSite
         public override void VerifyRenderingInServerForm(Control control)
         {
             /* Verifies that the control is rendered */
+        }
+
+        protected void ddlStep_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ddlUser.DataSource = null;
+            ddlUser.Items.Clear();
+            UserHelper user = new UserHelper();
+            List<string> users = user.GetUsersByStep(ddlStep.SelectedValue);
+            ddlUser.DataSource = users;
+            ddlUser.DataBind();
         }
     }
 }
