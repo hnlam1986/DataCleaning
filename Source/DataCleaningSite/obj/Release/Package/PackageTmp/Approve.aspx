@@ -17,7 +17,7 @@
             <div class="text-field-panel">
                 <%-- Verify section --%>
                 <div class="panel-header">
-                    <div class="panel-title">Verify Data</div>
+                    <div class="panel-title">Verify Data<div id="working_status"></div></div>
                 </div>
                 <div class="panel-contain" id="divCleaningData">
                     <div id="fullOriginalAddressContain">
@@ -30,19 +30,19 @@
                     </div>
                     <table cellspacing="10">
                         <tr>
-                            <td>Address 1:</td>
+                            <td>ADDRESS1 [Số]:</td>
                             <td>
                                 <input type="text" id="txtAddress1" class="login-textbox" readonly="true" tabindex="1"/></td>
-                            <td>Address 3:</td>
+                            <td>ADDRESS3 [Phường(5)/Xã(6)/Thị trấn(7)]:</td>
                             <td>
                                 <input type="text" id="txtAddress3" class="login-textbox" readonly="true" tabindex="3"/></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>Address 2:</td>
+                            <td>ADDRESS2 [Tên đường/khóm(1)/Thôn(2)/Ấp(3)/Tổ(4)]:</td>
                             <td>
                                 <input type="text" id="txtAddress2" class="login-textbox" readonly="true" tabindex="2"/></td>
-                            <td>Address 4:</td>
+                            <td>ADDRESS4 [Quận(8)/Huyện(9)/Thị xã(0)]:</td>
                             <td>
                                 <input type="text" id="txtAddress4" class="login-textbox" readonly="true" tabindex="4"/></td>
                             <td>
@@ -74,19 +74,19 @@
                     </div>
                     <table cellspacing="10">
                         <tr>
-                            <td>Address 1:</td>
+                            <td>ADDRESS1 [Số]:</td>
                             <td>
                                 <input type="text" id="txtApprove1" class="login-textbox" tabindex="5"/></td>
-                            <td>Address 3:</td>
+                            <td>ADDRESS3 [Phường(5)/Xã(6)/Thị trấn(7)]:</td>
                             <td>
                                 <input type="text" id="txtApprove3" class="login-textbox" tabindex="7"/></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>Address 2:</td>
+                            <td>ADDRESS2 [Tên đường/khóm(1)/Thôn(2)/Ấp(3)/Tổ(4)]:</td>
                             <td>
                                 <input type="text" id="txtApprove2" class="login-textbox" tabindex="6"/></td>
-                            <td>Address 4:</td>
+                            <td>ADDRESS4 [Quận(8)/Huyện(9)/Thị xã(0)]:</td>
                             <td>
                                 <input type="text" id="txtApprove4" class="login-textbox" tabindex="8"/></td>
                             <td>

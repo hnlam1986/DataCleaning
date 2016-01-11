@@ -15,7 +15,7 @@
         <div data-options="region:'center',iconCls:'icon-ok'" id="divRight" >
             <div class="text-field-panel">
                 <div class="panel-header">
-                    <div class="panel-title">Verify Data</div>
+                    <div class="panel-title">Verify Data<div id="working_status"></div></div>
                 </div>
                 <div class="panel-contain" id="divCleaningData">
                     <div id="fullOriginalAddressContain">
@@ -31,16 +31,16 @@
                             <td>ADDRESS1 [Số]:</td>
                             <td>
                                 <input type="text" id="txtAddress1" class="login-textbox" tabindex="1"/></td>
-                            <td>ADDRESS3 [Phường/Xã/Thị trấn]:</td>
+                            <td>ADDRESS3 [Phường(5)/Xã(6)/Thị trấn(7)]:</td>
                             <td>
                                 <input type="text" id="txtAddress3" class="login-textbox" tabindex="3"/></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>ADDRESS2 [Tên đường/khóm/Thôn/Ấp/Tổ]:</td>
+                            <td>ADDRESS2 [Tên đường/khóm(1)/Thôn(2)/Ấp(3)/Tổ(4)]:</td>
                             <td>
                                 <input type="text" id="txtAddress2" class="login-textbox" tabindex="2"/></td>
-                            <td>ADDRESS4 [Quận/Huyện/Thị xã]:</td>
+                            <td>ADDRESS4 [Quận(8)/Huyện(9)/Thị xã(0)]:</td>
                             <td>
                                 <input type="text" id="txtAddress4" class="login-textbox" tabindex="4"/></td>
                             <td>

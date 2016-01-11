@@ -50,6 +50,7 @@
     <Compile Include="Entities\Data.cs" />
     <Compile Include="Entities\FullCardInfo.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\WorkingStatus.cs" />
     <Compile Include="ExecutionDataObject\UserHelper.cs" />
     <Compile Include="ExecutionDataObject\DataHelper.cs" />
     <Compile Include="ExecutionDataObject\DataProcessHelper.cs" />

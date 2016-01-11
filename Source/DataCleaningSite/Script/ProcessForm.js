@@ -226,7 +226,18 @@ ProcessForm.prototype = {
             }
 
         });
+        processForm.LoadWorkingStatus();
         $("#txtAddress2").focus();
+    },
+    LoadWorkingStatus: function()
+    {
+        $.ajax({
+            url: "ajax.aspx",
+            data: { "action": "get_working_status", "step": processForm.CurrentStep }
+        }).success(function (result) {
+            var res = jQuery.parseJSON(result);
+            $("#working_status").html("Total card: " + res.total_card + "  | Total time: " + res.total_time + "(s)  | Speed: " + res.speed + "(s)");
+        });
     },
     GetCardInfo: function (card_id) {
         var processForm = this;
@@ -386,8 +397,9 @@ ProcessForm.prototype = {
         processForm.CurrentCard = card;
         processForm.CurrentCard.starttime = GetCurrentTime();
         processForm.FillDataToTextBox(card);
-        $("#ifGoogleEmbed").attr("src", "http://www.google.com.vn/custom?q=" + encodeURI(processForm.CurrentCard.full_cleaning_address));
+        $("#ifGoogleEmbed").attr("src", "http://www.google.com.vn/custom?q=" + encodeURI(processForm.CurrentCard.full_cleaning_address +", "+ processForm.CurrentCard.city_lms +", "+processForm.CurrentCard.state_desc));
         $(".highlight-background").removeClass("highlight-background");
+        processForm.LoadWorkingStatus();
     },
     GetPreviousCard: function () {
         var processForm = this;
@@ -401,7 +413,7 @@ ProcessForm.prototype = {
         var processForm = this;
         if (processForm.CurrentCard != null && processForm.CurrentCard != undefined) {
             var wName = "GoogleSearchPopup";
-            var url = "https://www.google.com/#q=" + encodeURI(processForm.CurrentCard.full_cleaning_address);
+            var url = "https://www.google.com/#q=" + encodeURI(processForm.CurrentCard.full_cleaning_address +", "+ processForm.CurrentCard.city_lms +", "+processForm.CurrentCard.state_desc);
             openWindowPopup(wName, url);
         }
     },
@@ -496,7 +508,7 @@ ProcessForm.prototype = {
             processForm.CleanDataFill();
             $("#btnSave").removeAttr("onclick").attr("onclick", "processForm.LoadProcessCard($('#divLeft'));");
             $("#ifGoogleEmbed").attr("src", "http://www.google.com.vn/custom?q=");
-
+            processForm.LoadWorkingStatus();
         }
     }
     , CheckResizeWindows: function () {
@@ -529,7 +541,7 @@ ProcessForm.prototype = {
     InsertTextIntoFocusTextbox: function (text) {
         var value = $(processForm.GetFocusTextbox()).val();
         var cusorIndex = doGetCaretPosition($(processForm.GetFocusTextbox())[0]);
-        var insertText = (value.substring(0, cusorIndex)).trim() + " " + text + " " + value.substring(cusorIndex).trim();
+        var insertText = cusorIndex > 0 ? (value.substring(0, cusorIndex)).trim() + " " + text + " " + value.substring(cusorIndex).trim() : text + " " + value.substring(cusorIndex).trim();
         $(processForm.GetFocusTextbox()).val(insertText);
     },
     BindShortcut: function () {

@@ -28,6 +28,8 @@ namespace DBHelper
         public const string ResetAllData = "reset_all_data";
         public const string GetExportData = "get_export_data";
         public const string GetUserByStep = "get_user_by_step";
+        public const string GetWorkingStatus = "get_working_status";
+        
         
         #endregion
         public static string Schema

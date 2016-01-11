@@ -149,5 +149,7 @@ namespace DBHelper.ExecutionDataObject
             int res = cmd.ExecuteScalar(DBConstant.ResetAllData, null);
             return res;
         }
+
+        
     }
 }

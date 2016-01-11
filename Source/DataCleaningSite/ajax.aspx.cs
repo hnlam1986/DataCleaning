@@ -49,7 +49,24 @@ namespace DataCleaningSite
                 case "update_user_data":
                     UpdateUserData();
                     break;
+                case "get_working_status":
+                    GetWorkingStatus();
+                    break;
+
             }
+        }
+        private void GetWorkingStatus()
+        {
+            Login login = (Login)Session[DataCleaningConstant.LoginInfoSession];
+            string step = Request.QueryString["step"];
+            WorkingStatusHelper working = new WorkingStatusHelper();
+            WorkingStatus status = working.GetWorkingStatus(login.UserLogin.user_name, step);
+            status.total_time = Math.Round(status.total_time, 1);
+            status.speed = Math.Round(status.speed, 1);
+            var jsonSerialiser = new JavaScriptSerializer();
+            var json = jsonSerialiser.Serialize(status);
+            Response.Write(json);
+            Response.End();
         }
         private void GetAllActiveUser()
         {

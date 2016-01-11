@@ -23,6 +23,12 @@
     </form>
     <script>
         var googleAPI = new GoogleAPI({ "addresses": [{ "id": 1, "address": "26, CÁCH MẠNG THÁNG 8,5" }, { "id": 2, "address": "0, , TỔ 18, NGUYỄN PHÚC" }, { "id": 3, "address": "THÔN DỊCH ĐỒNG, XÃ ĐỒNG CƯƠNG" }] });
+        $(document).ready(function () {
+            $("#btnButton").click();
+            setInterval(function () {
+                location.reload();
+            }, 3600000);//3600000
+        });
     </script>
 </body>
 </html>
