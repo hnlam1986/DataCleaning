@@ -397,7 +397,16 @@ ProcessForm.prototype = {
         processForm.CurrentCard = card;
         processForm.CurrentCard.starttime = GetCurrentTime();
         processForm.FillDataToTextBox(card);
-        $("#ifGoogleEmbed").attr("src", "http://www.google.com.vn/custom?q=" + encodeURI(processForm.CurrentCard.full_cleaning_address +", "+ processForm.CurrentCard.city_lms +", "+processForm.CurrentCard.state_desc));
+        //$("#ifGoogleEmbed").attr("src", "http://www.google.com.vn/custom?q=" + encodeURI(processForm.CurrentCard.full_cleaning_address +", "+ processForm.CurrentCard.city_lms +", "+processForm.CurrentCard.state_desc));
+        var url = "http://www.google.com.vn/custom?q=" + encodeURI(processForm.CurrentCard.full_cleaning_address +", "+ processForm.CurrentCard.city_lms +", "+processForm.CurrentCard.state_desc);
+        var screenWidth = screen.availWidth;
+        var screenHeight = screen.availHeight*40/100;
+        var TheNewWin = window.open(url, "GoogleSearch", "height=" + screenHeight + ",width=" + screenWidth + ",scrollbars=yes");
+        try{
+            TheNewWin.moveTo(0, screen.availHeight - screenHeight);
+        }catch(ex)
+        {
+        }
         $(".highlight-background").removeClass("highlight-background");
         processForm.LoadWorkingStatus();
     },
@@ -507,7 +516,7 @@ ProcessForm.prototype = {
             $("#btnSave").val("Get More Card");
             processForm.CleanDataFill();
             $("#btnSave").removeAttr("onclick").attr("onclick", "processForm.LoadProcessCard($('#divLeft'));");
-            $("#ifGoogleEmbed").attr("src", "http://www.google.com.vn/custom?q=");
+            //$("#ifGoogleEmbed").attr("src", "http://www.google.com.vn/custom?q=");
             processForm.LoadWorkingStatus();
         }
     }

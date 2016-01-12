@@ -26,7 +26,6 @@
         $(document).ready(function () {
             $("#btnButton").click();
             setInterval(function () {
-                alert();
                 location.reload();
             }, 3600000);//3600000
         });

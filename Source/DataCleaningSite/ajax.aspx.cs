@@ -116,6 +116,13 @@ namespace DataCleaningSite
             Login login = (Login)Session[DataCleaningConstant.LoginInfoSession];
             var jsonSerialiser = new JavaScriptSerializer();
             FullCardInfo info = jsonSerialiser.Deserialize<FullCardInfo>(data);
+            if (info != null)
+            {
+                info.verify_address1 = HttpUtility.HtmlDecode(info.verify_address1);
+                info.verify_address2 = HttpUtility.HtmlDecode(info.verify_address2);
+                info.verify_address3 = HttpUtility.HtmlDecode(info.verify_address3);
+                info.verify_address4 = HttpUtility.HtmlDecode(info.verify_address4);
+            }
             DataProcessHelper dataProcessHelper = new DataProcessHelper();
             TimeSpan totalTime = DateTime.Parse(info.endtime).Subtract(DateTime.Parse(info.starttime));
             double total = totalTime.TotalSeconds;
@@ -123,13 +130,20 @@ namespace DataCleaningSite
             Response.Write(result.ToString());
             Response.End();
         }
-
+        
         private void SaveQcData()
         {
             string data = Request.Form["data"];
             Login login = (Login)Session[DataCleaningConstant.LoginInfoSession];
             var jsonSerialiser = new JavaScriptSerializer();
             FullCardInfo info = jsonSerialiser.Deserialize<FullCardInfo>(data);
+            if (info != null)
+            {
+                info.qc_address1 = HttpUtility.HtmlDecode(info.qc_address1);
+                info.qc_address2 = HttpUtility.HtmlDecode(info.qc_address2);
+                info.qc_address3 = HttpUtility.HtmlDecode(info.qc_address3);
+                info.qc_address4 = HttpUtility.HtmlDecode(info.qc_address4);
+            }
             DataProcessHelper dataProcessHelper = new DataProcessHelper();
             TimeSpan totalTime = DateTime.Parse(info.endtime).Subtract(DateTime.Parse(info.starttime));
             double total = totalTime.TotalSeconds;
@@ -144,6 +158,13 @@ namespace DataCleaningSite
             Login login = (Login)Session[DataCleaningConstant.LoginInfoSession];
             var jsonSerialiser = new JavaScriptSerializer();
             FullCardInfo info = jsonSerialiser.Deserialize<FullCardInfo>(data);
+            if (info != null)
+            {
+                info.approve_address1 = HttpUtility.HtmlDecode(info.approve_address1);
+                info.approve_address2 = HttpUtility.HtmlDecode(info.approve_address2);
+                info.approve_address3 = HttpUtility.HtmlDecode(info.approve_address3);
+                info.approve_address4 = HttpUtility.HtmlDecode(info.approve_address4);
+            }
             DataProcessHelper dataProcessHelper = new DataProcessHelper();
             TimeSpan totalTime = DateTime.Parse(info.endtime).Subtract(DateTime.Parse(info.starttime));
             double total = totalTime.TotalSeconds;

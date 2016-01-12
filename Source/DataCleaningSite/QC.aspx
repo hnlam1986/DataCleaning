@@ -28,19 +28,19 @@
                     </div>
                     <table cellspacing="10">
                         <tr>
-                            <td>ADDRESS1 [Số]:</td>
+                            <td>ADDRESS1 <b>[Số]</b>:</td>
                             <td>
                                 <input type="text" id="txtAddress1" class="login-textbox" tabindex="1"/></td>
-                            <td>ADDRESS3 [Phường(5)/Xã(6)/Thị trấn(7)]:</td>
+                            <td>ADDRESS3 <b>[Phường(5)/Xã(6)/Thị trấn(7)]</b>:</td>
                             <td>
                                 <input type="text" id="txtAddress3" class="login-textbox" tabindex="3"/></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>ADDRESS2 [Tên đường/khóm(1)/Thôn(2)/Ấp(3)/Tổ(4)]:</td>
+                            <td>ADDRESS2 <b>[Tên đường/khóm(1)/Thôn(2)/Ấp(3)/Tổ(4)]</b>:</td>
                             <td>
                                 <input type="text" id="txtAddress2" class="login-textbox" tabindex="2"/></td>
-                            <td>ADDRESS4 [Quận(8)/Huyện(9)/Thị xã(0)]:</td>
+                            <td>ADDRESS4 <b>[Quận(8)/Huyện(9)/Thị xã(0)]</b>:</td>
                             <td>
                                 <input type="text" id="txtAddress4" class="login-textbox" tabindex="4"/></td>
                             <td>
@@ -62,9 +62,9 @@
                 </div>
             </div>
         </div>
-        <div data-options="region:'south',split:true" title="Google Search"  id="divGoogle" style="height: 40%;">
+       <%-- <div data-options="region:'south',split:true" title="Google Search"  id="divGoogle" style="height: 40%;">
             <iframe id="ifGoogleEmbed" width="100%" height="100%" style="visibility:visible" src="http://www.google.com.vn/custom?q="></iframe>
-        </div>
+        </div>--%>
         <script>
             var processForm = new ProcessForm('qc');
             $(document).ready(function () {
