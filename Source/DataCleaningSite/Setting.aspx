@@ -62,7 +62,7 @@
                 </tr>
             </table>
         </div>
-        <div id="divResetAllData">
+        <div id="divResetAllData" style="display:none">
             <table>
                 <tr>
                     <td>Reset all data:</td>

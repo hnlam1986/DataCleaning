@@ -31,19 +31,19 @@
                         <tr>
                             <td>ADDRESS1 <b>[Số]</b>:</td>
                             <td>
-                                <input type="text" id="txtAddress1" class="login-textbox" tabindex="1"/></td>
-                            <td>ADDRESS3 <b>[Phường(5)/Xã(6)/Thị trấn(7)]</b>:</td>
+                                <input type="text" id="txtAddress1" class="process-textbox" tabindex="1"/></td>
+                            <td>ADDRESS3 <b>[Phường(5)/<br />Xã(6)/Thị trấn(7)]</b>:</td>
                             <td>
-                                <input type="text" id="txtAddress3" class="login-textbox" tabindex="3"/></td>
+                                <input type="text" id="txtAddress3" class="process-textbox" tabindex="3"/></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>ADDRESS2 <b>[Tên đường/Khóm(1)/Thôn(2)/Ấp(3)/Tổ(4)]</b>:</td>
+                            <td>ADDRESS2 <b>[Tên đường/Khóm(1)/<br />Thôn(2)/Ấp(3)/Tổ(4)]</b>:</td>
                             <td>
-                                <input type="text" id="txtAddress2" class="login-textbox" tabindex="2"/></td>
-                            <td>ADDRESS4 <b>[Quận(8)/Huyện(9)/Thị xã(0)]</b>:</td>
+                                <input type="text" id="txtAddress2" class="process-textbox" tabindex="2"/></td>
+                            <td>ADDRESS4 <b>[Quận(8)/<br />Huyện(9)/Thị xã(0)]</b>:</td>
                             <td>
-                                <input type="text" id="txtAddress4" class="login-textbox" tabindex="4"/></td>
+                                <input type="text" id="txtAddress4" class="process-textbox" tabindex="4"/></td>
                             <td>
                                 <input type="button" value="Next Card" disabled="disabled" id="btnSave" tabindex="5"/>
                                 <input type="button" value="Previous Card"  id="btnPrevious" tabindex="6" onclick="processForm.GetPreviousCard();" disabled="disabled"/>

@@ -32,19 +32,19 @@
                         <tr>
                             <td>ADDRESS1 <b>[Số]</b>:</td>
                             <td>
-                                <input type="text" id="txtAddress1" class="login-textbox" readonly="true" tabindex="1"/></td>
-                            <td>ADDRESS3 <b>[Phường(5)/Xã(6)/Thị trấn(7)]</b>:</td>
+                                <input type="text" id="txtAddress1" class="process-textbox" readonly="true" tabindex="1"/></td>
+                            <td>ADDRESS3 <b>[Phường(5)/<br />Xã(6)/Thị trấn(7)]</b>:</td>
                             <td>
-                                <input type="text" id="txtAddress3" class="login-textbox" readonly="true" tabindex="3"/></td>
+                                <input type="text" id="txtAddress3" class="process-textbox" readonly="true" tabindex="3"/></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>ADDRESS2 <b>[Tên đường/khóm(1)/Thôn(2)/Ấp(3)/Tổ(4)]</b>:</td>
+                            <td>ADDRESS2 <b>[Tên đường/khóm(1)/<br />Thôn(2)/Ấp(3)/Tổ(4)]</b>:</td>
                             <td>
-                                <input type="text" id="txtAddress2" class="login-textbox" readonly="true" tabindex="2"/></td>
-                            <td>ADDRESS4 <b>[Quận(8)/Huyện(9)/Thị xã(0)]</b>:</td>
+                                <input type="text" id="txtAddress2" class="process-textbox" readonly="true" tabindex="2"/></td>
+                            <td>ADDRESS4 <b>[Quận(8)/<br />Huyện(9)/Thị xã(0)]</b>:</td>
                             <td>
-                                <input type="text" id="txtAddress4" class="login-textbox" readonly="true" tabindex="4"/></td>
+                                <input type="text" id="txtAddress4" class="process-textbox" readonly="true" tabindex="4"/></td>
                             <td>
                         </tr>
                     </table>
@@ -76,19 +76,19 @@
                         <tr>
                             <td>ADDRESS1 <b>[Số]</b>:</td>
                             <td>
-                                <input type="text" id="txtApprove1" class="login-textbox" tabindex="5"/></td>
-                            <td>ADDRESS3 <b>[Phường(5)/Xã(6)/Thị trấn(7)]</b>:</td>
+                                <input type="text" id="txtApprove1" class="process-textbox" tabindex="5"/></td>
+                            <td>ADDRESS3 <b>[Phường(5)/<br />Xã(6)/Thị trấn(7)]</b>:</td>
                             <td>
-                                <input type="text" id="txtApprove3" class="login-textbox" tabindex="7"/></td>
+                                <input type="text" id="txtApprove3" class="process-textbox" tabindex="7"/></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>ADDRESS2 <b>[Tên đường/khóm(1)/Thôn(2)/Ấp(3)/Tổ(4)]</b>:</td>
+                            <td>ADDRESS2 <b>[Tên đường/khóm(1)/<br />Thôn(2)/Ấp(3)/Tổ(4)]</b>:</td>
                             <td>
-                                <input type="text" id="txtApprove2" class="login-textbox" tabindex="6"/></td>
-                            <td>ADDRESS4 <b>[Quận(8)/Huyện(9)/Thị xã(0)]</b>:</td>
+                                <input type="text" id="txtApprove2" class="process-textbox" tabindex="6"/></td>
+                            <td>ADDRESS4 <b>[Quận(8)/<br />Huyện(9)/Thị xã(0)]</b>:</td>
                             <td>
-                                <input type="text" id="txtApprove4" class="login-textbox" tabindex="8"/></td>
+                                <input type="text" id="txtApprove4" class="process-textbox" tabindex="8"/></td>
                             <td>
                                 <input type="button" value="Next Card" disabled="disabled" id="btnSave"/></td>
                         </tr>
