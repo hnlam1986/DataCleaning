@@ -28,21 +28,21 @@
                         <label id="lblFullAddress">Full address: </label>
                         <label id="lblFullAddressValue" class="bold-text"></label><label id="lblCity" class="lblCity bold-text"></label>
                     </div>
-                    <table cellspacing="10">
+                    <table cellspacing="10" style="width:100%">
                         <tr>
-                            <td>ADDRESS1 <b>[Số]</b>:</td>
-                            <td>
+                            <td style="width:150px"><b>ADDRESS1</b> [Số]:</td>
+                            <td style="width:auto">
                                 <input type="text" id="txtAddress1" class="process-textbox" readonly="true" tabindex="1"/></td>
-                            <td>ADDRESS3 <b>[Phường(5)/<br />Xã(6)/Thị trấn(7)]</b>:</td>
-                            <td>
+                            <td style="width:150px"><b>ADDRESS3</b> [Phường<span class="hotkey">(5)</span>/<br />Xã<span class="hotkey">(6)</span>/Thị trấn<span class="hotkey">(7)</span>]:</td>
+                            <td style="width:auto">
                                 <input type="text" id="txtAddress3" class="process-textbox" readonly="true" tabindex="3"/></td>
-                            <td></td>
+                            <td style="width:100px"></td>
                         </tr>
                         <tr>
-                            <td>ADDRESS2 <b>[Tên đường/khóm(1)/<br />Thôn(2)/Ấp(3)/Tổ(4)]</b>:</td>
+                            <td><b>ADDRESS2</b> [Tên Đường/ Khóm<span class="hotkey">(1)</span>/Thôn<span class="hotkey">(2)</span>/Ấp<span class="hotkey">(3)</span> /Tổ<span class="hotkey">(4)</span>]:</td>
                             <td>
                                 <input type="text" id="txtAddress2" class="process-textbox" readonly="true" tabindex="2"/></td>
-                            <td>ADDRESS4 <b>[Quận(8)/<br />Huyện(9)/Thị xã(0)]</b>:</td>
+                            <td><b>ADDRESS4</b> [Quận<span class="hotkey">(8)</span>/<br />Huyện<span class="hotkey">(9)</span>/Thị xã<span class="hotkey">(0)</span>]:</td>
                             <td>
                                 <input type="text" id="txtAddress4" class="process-textbox" readonly="true" tabindex="4"/></td>
                             <td>
@@ -72,25 +72,25 @@
                             </tr>
                         </table>
                     </div>
-                    <table cellspacing="10">
+                    <table cellspacing="10" style="width:100%">
                         <tr>
-                            <td>ADDRESS1 <b>[Số]</b>:</td>
-                            <td>
+                            <td style="width:150px"><b>ADDRESS1</b> [Số]:</td>
+                            <td style="width:auto">
                                 <input type="text" id="txtApprove1" class="process-textbox" tabindex="5"/></td>
-                            <td>ADDRESS3 <b>[Phường(5)/<br />Xã(6)/Thị trấn(7)]</b>:</td>
-                            <td>
+                            <td style="width:150px"><b>ADDRESS3</b> [Phường<span class="hotkey">(5)</span>/<br />Xã<span class="hotkey">(6)</span>/Thị trấn<span class="hotkey">(7)</span>]:</td>
+                            <td style="width:auto">
                                 <input type="text" id="txtApprove3" class="process-textbox" tabindex="7"/></td>
-                            <td></td>
+                            <td style="width:100px"></td>
                         </tr>
                         <tr>
-                            <td>ADDRESS2 <b>[Tên đường/khóm(1)/<br />Thôn(2)/Ấp(3)/Tổ(4)]</b>:</td>
+                            <td><b>ADDRESS2</b> [Tên Đường/ Khóm<span class="hotkey">(1)</span>/Thôn<span class="hotkey">(2)</span>/Ấp<span class="hotkey">(3)</span> /Tổ<span class="hotkey">(4)</span>]:</td>
                             <td>
                                 <input type="text" id="txtApprove2" class="process-textbox" tabindex="6"/></td>
-                            <td>ADDRESS4 <b>[Quận(8)/<br />Huyện(9)/Thị xã(0)]</b>:</td>
+                            <td><b>ADDRESS4</b> [Quận<span class="hotkey">(8)</span>/<br />Huyện<span class="hotkey">(9)</span>/Thị xã<span class="hotkey">(0)</span>]:</td>
                             <td>
                                 <input type="text" id="txtApprove4" class="process-textbox" tabindex="8"/></td>
                             <td>
-                                <input type="button" value="Next Card" disabled="disabled" id="btnSave"/></td>
+                                <input type="button" value="Next Card" disabled="disabled" id="btnSave" class="process-button"/></td>
                         </tr>
                     </table>
                     <label id="lblMessage"> </label>

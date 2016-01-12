@@ -88,8 +88,8 @@ UserManagement.prototype = {
             var user_password = $("#txtPassword").val();
             var user_display = $("#txtDisplayName").val();
             var user_role = userManagement.GetRole();
+            var user_status = $("#ckActive").is(":checked")==true;
             var id = 0;
-            var user_status = true;
             if (action == "add") {
                 var data = { user_id: 0, user_name: userName, password: user_password, display_name: user_display, role: user_role, status: true };
                 $.ajax({
@@ -107,7 +107,7 @@ UserManagement.prototype = {
                 });
             } else {
                 var row_index = userManagement.GetIndexRow();
-                var data = { user_id: userManagement.CurrentUser.user_id, user_name: userName, password: user_password, display_name: user_display, role: user_role, status: true };
+                var data = { user_id: userManagement.CurrentUser.user_id, user_name: userName, password: user_password, display_name: user_display, role: user_role, status: user_status };
                 $.ajax({
                     type: "POST",
                     url: "ajax.aspx",
@@ -139,8 +139,8 @@ UserManagement.prototype = {
         return row_index;
     },
     SelectColumn: function (val, row) {
-        return '<a class="edit-function-column" data-user-id="' + row.user_id + ' " onclick="userManagement.EditUser(this)"></a>' +
-            '<a class="delete-function-column" data-user-id="' + row.user_id + '" onclick="userManagement.DeleteUser(this)"></a>';
+        return '<a class="edit-function-column" data-user-id="' + row.user_id + ' " onclick="userManagement.EditUser(this)"></a>';// +
+            //'<a class="delete-function-column" data-user-id="' + row.user_id + '" onclick="userManagement.DeleteUser(this)"></a>';
     },
     EditUser: function (button) {
         var userManagement = this;
@@ -159,6 +159,7 @@ UserManagement.prototype = {
             $("#btnAdd").val("Update User");
             $("#btnAdd").attr("data-action", "update");
             $("#btnCancel").removeClass("non-display");
+            $("#ckActive").prop('checked', user.status == true);
         }
     },
     DeleteUser: function (button) {

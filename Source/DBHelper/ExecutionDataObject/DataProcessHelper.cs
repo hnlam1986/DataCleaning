@@ -22,7 +22,7 @@ namespace DBHelper.ExecutionDataObject
         }
 
         public int SaveVerifyData(int management_id, int data_process_id, string add1, string add2, string add3, string add4,
-            string user_name, string start_time, string end_time, double totaltime, string step, int data_id)
+            string user_name, string start_time, string end_time, double totaltime, string step, int data_id, string cleaning_address1, string cleaning_address2, string cleaning_address3, string cleaning_address4, string full_cleaning_address)
         {
             int res = 0;
             NpgsqlParameter param_data_process_id = new NpgsqlParameter("@data_process_id", NpgsqlTypes.NpgsqlDbType.Integer);
@@ -50,9 +50,22 @@ namespace DBHelper.ExecutionDataObject
             param_step.Value = step;
             NpgsqlParameter param_data_id = new NpgsqlParameter("@data_id", NpgsqlTypes.NpgsqlDbType.Integer);
             param_data_id.Value = data_id;
+
+            NpgsqlParameter param_cleaning_add1 = new NpgsqlParameter("@cleaning_address1", NpgsqlTypes.NpgsqlDbType.Text);
+            param_cleaning_add1.Value = cleaning_address1;
+            NpgsqlParameter param_cleaning_add2 = new NpgsqlParameter("@cleaning_address2", NpgsqlTypes.NpgsqlDbType.Text);
+            param_cleaning_add2.Value = cleaning_address2;
+            NpgsqlParameter param_cleaning_add3 = new NpgsqlParameter("@cleaning_address3", NpgsqlTypes.NpgsqlDbType.Text);
+            param_cleaning_add3.Value = cleaning_address3;
+            NpgsqlParameter param_cleaning_add4 = new NpgsqlParameter("@cleaning_address4", NpgsqlTypes.NpgsqlDbType.Text);
+            param_cleaning_add4.Value = cleaning_address4;
+            NpgsqlParameter param_full_cleaning_add = new NpgsqlParameter("@full_cleaning_address", NpgsqlTypes.NpgsqlDbType.Text);
+            param_full_cleaning_add.Value = full_cleaning_address;
+            
             res = cmd.ExecuteScalar(DBConstant.SaveVerifyData, new NpgsqlParameter[] { 
                 param_management_id, param_data_process_id, param_add1, param_add2, param_add3, param_add4, 
-                param_user_name, param_start_time, param_end_time,param_totaltime, param_step,param_data_id  
+                param_user_name, param_start_time, param_end_time,param_totaltime, param_step,param_data_id,
+                param_cleaning_add1,param_cleaning_add2,param_cleaning_add3,param_cleaning_add4,param_full_cleaning_add
             });
             return res;
         }

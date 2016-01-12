@@ -25,6 +25,5 @@ D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\fi\Npgsql.resources.d
 D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\fr\Npgsql.resources.dll
 D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\ja\Npgsql.resources.dll
 D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\bin\Debug\zh-CN\Npgsql.resources.dll
-D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\obj\Debug\DBHelper.csprojResolveAssemblyReference.cache
 D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\obj\Debug\DBHelper.dll
 D:\Lam Huynh\GitHub\DataCleaning\Source\DBHelper\obj\Debug\DBHelper.pdb

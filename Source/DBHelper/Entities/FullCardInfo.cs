@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Npgsql;
 
 namespace DBHelper.Entities
@@ -72,11 +73,18 @@ namespace DBHelper.Entities
         public string approve_address2 { get; set; }
         public string approve_address3 { get; set; }
         public string approve_address4 { get; set; }
-        public string cleaning_address1 { get; set; }
-        public string cleaning_address2 { get; set; }
-        public string cleaning_address3 { get; set; }
-        public string cleaning_address4 { get; set; }
-        public string full_cleaning_address { get; set; }
+        private string _cleaning_address1 = "";
+        private string _cleaning_address2 = "";
+        private string _cleaning_address3 = "";
+        private string _cleaning_address4 = "";
+        private string _full_cleaning_address = "";
+
+
+        public string cleaning_address1 { get { return HttpUtility.HtmlDecode(HttpUtility.HtmlDecode(_cleaning_address1)); } set { _cleaning_address1 = value; } }
+        public string cleaning_address2 { get { return HttpUtility.HtmlDecode(HttpUtility.HtmlDecode(_cleaning_address2)); } set { _cleaning_address2 = value; } }
+        public string cleaning_address3 { get { return HttpUtility.HtmlDecode(HttpUtility.HtmlDecode(_cleaning_address3)); } set { _cleaning_address3 = value; } }
+        public string cleaning_address4 { get { return HttpUtility.HtmlDecode(HttpUtility.HtmlDecode(_cleaning_address4)); } set { _cleaning_address4 = value; } }
+        public string full_cleaning_address { get { return HttpUtility.HtmlDecode(HttpUtility.HtmlDecode(_full_cleaning_address)); } set { _full_cleaning_address = value; } }
         public string google_suggest { get; set; }
         public string starttime { get; set; }
         public string endtime { get; set; }

@@ -67,6 +67,13 @@
                     </tr>
                     <tr>
                         <td>
+                            <label for="ckActive" >
+                                <span>Active: </span>
+                            </label>
+                            <input type="checkbox" value="4" id="ckActive" checked="checked"/></td>
+                    </tr>
+                    <tr>
+                        <td>
 
                             <input type="button" value="Add User" id="btnAdd" onclick="userManagement.CreateUser();" data-action="add"/>
                             <input type="button" value="Cancle" id="btnCancel" onclick="userManagement.CancelUpdate();" class="non-display" />

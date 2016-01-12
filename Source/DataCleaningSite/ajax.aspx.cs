@@ -91,7 +91,7 @@ namespace DataCleaningSite
         private void UpdateAddressSuggest()
         {
             string data = Request.Form["data"];
-            XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Address\":" + data + "}", "Addresses");
+            XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Address\":" +  data + "}", "Addresses");
             StringWriter sw = new StringWriter();
             XmlTextWriter tx = new XmlTextWriter(sw);
             doc.WriteTo(tx);
@@ -126,7 +126,9 @@ namespace DataCleaningSite
             DataProcessHelper dataProcessHelper = new DataProcessHelper();
             TimeSpan totalTime = DateTime.Parse(info.endtime).Subtract(DateTime.Parse(info.starttime));
             double total = totalTime.TotalSeconds;
-            int result = dataProcessHelper.SaveVerifyData(info.management_id, info.data_process_id, info.verify_address1, info.verify_address2, info.verify_address3, info.verify_address4, login.UserLogin.user_name, info.starttime, info.endtime, total, info.step, info.data_id);
+            int result = dataProcessHelper.SaveVerifyData(info.management_id, info.data_process_id, info.verify_address1, info.verify_address2, info.verify_address3, 
+                info.verify_address4, login.UserLogin.user_name, info.starttime, info.endtime, total, info.step, info.data_id, info.cleaning_address1
+                , info.cleaning_address2, info.cleaning_address3, info.cleaning_address4, info.full_cleaning_address);
             Response.Write(result.ToString());
             Response.End();
         }

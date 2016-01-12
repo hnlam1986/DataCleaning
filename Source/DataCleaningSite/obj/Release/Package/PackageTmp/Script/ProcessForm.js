@@ -5,8 +5,10 @@
     this.CurrentCard = null;
     this.CurrentStep = currentStep;
     this.PreviousCard = null;
+    this.IsPreviousButtonClick = false;
     this.Initialize(currentStep);
     this.BindHighlightTextBox();
+    
 };
 ProcessForm.prototype = {
     Initialize: function (currentStep) {
@@ -15,6 +17,7 @@ ProcessForm.prototype = {
         var screenHeigth = $(window).height() - $("#mainNavigator").height();
         $("#MainContainBody").height(screenHeigth);
         processForm.CurrentCard = null;
+        processForm.IsPreviousButtonClick = false;
         processForm.CurrentStep = currentStep;
         processForm.CheckResizeWindows();
 
@@ -286,6 +289,21 @@ ProcessForm.prototype = {
             add4 = card_info.verify_address4;
             full_address = processForm.CompileAddress(add1, add2, add3, add4);
         }
+        if (processForm.IsPreviousButtonClick == true) {
+            processForm.IsPreviousButtonClick = false;
+            if (processForm.CurrentStep == 'verify') {
+                add1 = processForm.CurrentCard.verify_address1;
+                add2 = processForm.CurrentCard.verify_address2;
+                add3 = processForm.CurrentCard.verify_address3;
+                add4 = processForm.CurrentCard.verify_address4;
+            } else if (processForm.CurrentStep == 'qc') {
+                add1 = processForm.CurrentCard.qc_address1;
+                add2 = processForm.CurrentCard.qc_address2;
+                add3 = processForm.CurrentCard.qc_address3;
+                add4 = processForm.CurrentCard.qc_address4;
+            }
+        }
+        
         $("#txtAddress1").val(add1);
         $("#txtAddress2").val(add2);
         $("#txtAddress3").val(add3);
@@ -398,7 +416,7 @@ ProcessForm.prototype = {
         processForm.CurrentCard.starttime = GetCurrentTime();
         processForm.FillDataToTextBox(card);
         //$("#ifGoogleEmbed").attr("src", "http://www.google.com.vn/custom?q=" + encodeURI(processForm.CurrentCard.full_cleaning_address +", "+ processForm.CurrentCard.city_lms +", "+processForm.CurrentCard.state_desc));
-        var url = "http://www.google.com.vn/custom?q=" + encodeURI(processForm.CurrentCard.full_cleaning_address +", "+ processForm.CurrentCard.city_lms +", "+processForm.CurrentCard.state_desc);
+        var url = "http://www.google.com.vn/search?q=" + encodeURIComponent(processForm.CurrentCard.full_cleaning_address + ", " + processForm.CurrentCard.city_lms + ", " + processForm.CurrentCard.state_desc);
         var screenWidth = screen.availWidth;
         var screenHeight = screen.availHeight*40/100;
         var TheNewWin = window.open(url, "GoogleSearch", "height=" + screenHeight + ",width=" + screenWidth + ",scrollbars=yes");
@@ -412,6 +430,7 @@ ProcessForm.prototype = {
     },
     GetPreviousCard: function () {
         var processForm = this;
+        processForm.IsPreviousButtonClick = true;
         var preCard = String.format(processForm.ItemTemplate, processForm.PreviousCard.management_id, processForm.PreviousCard.address, true);
         var html = $("#divLeft").html();
         $("#divLeft").html(preCard + html);
@@ -422,7 +441,8 @@ ProcessForm.prototype = {
         var processForm = this;
         if (processForm.CurrentCard != null && processForm.CurrentCard != undefined) {
             var wName = "GoogleSearchPopup";
-            var url = "https://www.google.com/#q=" + encodeURI(processForm.CurrentCard.full_cleaning_address +", "+ processForm.CurrentCard.city_lms +", "+processForm.CurrentCard.state_desc);
+            var url = "https://www.google.com/#q=" + encodeURI(processForm.CurrentCard.full_cleaning_address + ", " + processForm.CurrentCard.city_lms + ", " + processForm.CurrentCard.state_desc);
+            
             openWindowPopup(wName, url);
         }
     },
@@ -462,20 +482,21 @@ ProcessForm.prototype = {
     SaveVerifyCard: function () {
         var processForm = this;
         AddIndicatorToDiv("#MainContainBody");
-        processForm.PreviousCard.cleaning_address1 = processForm.CurrentCard.verify_address1 = $("#txtAddress1").val();
-        processForm.PreviousCard.cleaning_address2 = processForm.CurrentCard.verify_address2 = $("#txtAddress2").val();
-        processForm.PreviousCard.cleaning_address3 = processForm.CurrentCard.verify_address3 = $("#txtAddress3").val();
-        processForm.PreviousCard.cleaning_address4 = processForm.CurrentCard.verify_address4 = $("#txtAddress4").val();
+        processForm.CurrentCard.verify_address1 = $("#txtAddress1").val();
+        processForm.CurrentCard.verify_address2 = $("#txtAddress2").val();
+        processForm.CurrentCard.verify_address3 = $("#txtAddress3").val();
+        processForm.CurrentCard.verify_address4 = $("#txtAddress4").val();
         processForm.CurrentCard.endtime = GetCurrentTime();
         processForm.SaveCard(processForm.CurrentCard, "save_verify_data");
+
     },
     SaveQCCard: function () {
         var processForm = this;
         AddIndicatorToDiv("#MainContainBody");
-        processForm.PreviousCard.verify_address1 = processForm.CurrentCard.qc_address1 = $("#txtAddress1").val();
-        processForm.PreviousCard.verify_address2 = processForm.CurrentCard.qc_address2 = $("#txtAddress2").val();
-        processForm.PreviousCard.verify_address3 = processForm.CurrentCard.qc_address3 = $("#txtAddress3").val();
-        processForm.PreviousCard.verify_address4 = processForm.CurrentCard.qc_address4 = $("#txtAddress4").val();
+        processForm.CurrentCard.qc_address1 = $("#txtAddress1").val();
+        processForm.CurrentCard.qc_address2 = $("#txtAddress2").val();
+        processForm.CurrentCard.qc_address3 = $("#txtAddress3").val();
+        processForm.CurrentCard.qc_address4 = $("#txtAddress4").val();
         processForm.CurrentCard.endtime = GetCurrentTime();
         processForm.SaveCard(processForm.CurrentCard, "save_qc_data");
     },

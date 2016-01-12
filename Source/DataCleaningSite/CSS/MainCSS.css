@@ -90,7 +90,7 @@
 }
 .process-textbox
 {
-    width: 450px;
+    width: 100%;
 }
 
 #divLoginSubmit
@@ -284,7 +284,6 @@
 {
     background-color: #ffcccc;
     border: 1px solid #d9d9d9;
-    width:195px;
 }
 #subMenu
 {
@@ -401,4 +400,13 @@
 #working_status
 {
     float:right;
+}
+.hotkey
+{
+    font-weight:bold;
+    color: red;
+}
+.process-button
+{
+    width:100px;
 }
