@@ -12,6 +12,9 @@
 };
 ProcessForm.prototype = {
     Initialize: function (currentStep) {
+        var screenWidth = screen.availWidth;
+        var screenHeight = screen.availHeight * 60 / 100;
+        window.resizeTo(screenWidth, screenHeight);
         var processForm = this;//onclick='processForm.SelectCard(this);'
         processForm.ItemTemplate = "<div class='card-item {2}' id='card_id_{0}'  data-card-id='{0}'>{1}</div>";
         var screenHeigth = $(window).height() - $("#mainNavigator").height();
@@ -416,7 +419,7 @@ ProcessForm.prototype = {
         processForm.CurrentCard.starttime = GetCurrentTime();
         processForm.FillDataToTextBox(card);
         //$("#ifGoogleEmbed").attr("src", "http://www.google.com.vn/custom?q=" + encodeURI(processForm.CurrentCard.full_cleaning_address +", "+ processForm.CurrentCard.city_lms +", "+processForm.CurrentCard.state_desc));
-        var url = "http://www.google.com.vn/search?q=" + encodeURIComponent(processForm.CurrentCard.full_cleaning_address + ", " + processForm.CurrentCard.city_lms + ", " + processForm.CurrentCard.state_desc);
+        var url = "http://www.bing.com/search?q=" + encodeURIComponent(processForm.CurrentCard.full_cleaning_address + ", " + processForm.CurrentCard.city_lms + ", " + processForm.CurrentCard.state_desc);
         var screenWidth = screen.availWidth;
         var screenHeight = screen.availHeight*40/100;
         var TheNewWin = window.open(url, "GoogleSearch", "height=" + screenHeight + ",width=" + screenWidth + ",scrollbars=yes");
