@@ -71,6 +71,11 @@ function GetCurrentTime() {
     if (second.toString().length == 1) {
         var second = '0' + second;
     }
+    if (mili.toString().length == 1) {
+        var mili = '00' + mili;
+    } else if (mili.toString().length == 2) {
+        var mili = '0' + mili;
+    }
     var dateTime = hour + ':' + minute + ':' + second + "." + mili;
     return dateTime;
 }
