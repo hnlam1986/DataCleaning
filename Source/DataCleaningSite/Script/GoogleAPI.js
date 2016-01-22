@@ -121,7 +121,7 @@ GoogleAPI.prototype = {
         $("#keyword").html(searchValue);
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': searchValue }, function (results, status) {
-            if (status === google.maps.GeocoderStatus.OK || status === google.maps.GeocoderStatus.ZERO_RESULTS) {
+            if (status === google.maps.GeocoderStatus.OK || status === google.maps.GeocoderStatus.ZERO_RESULTS || status === google.maps.GeocoderStatus.INVALID_REQUEST) {
                 var res = before + googleAPI.BuildAdrressList(results);
                 if (loop + results.length >= 5 || !address.indexOf(',')>0) {
                     loop += results.length;
